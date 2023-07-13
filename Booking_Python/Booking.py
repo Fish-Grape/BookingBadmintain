@@ -1,5 +1,4 @@
 import requests
-import execjs
 import subprocess
 
 params = {
@@ -15,6 +14,6 @@ header = {
 # print(response.text)
 
 
-result = subprocess.check_output(['node', 'booking.js'])
+result = subprocess.check_output(['node', 'app.js'])
 print(result.decode())
 

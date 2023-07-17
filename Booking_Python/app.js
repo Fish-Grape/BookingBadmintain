@@ -1,15 +1,21 @@
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
+const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+const window = dom.window;
+
 const n = {
-  o: (e, t) => Object.prototype.hasOwnProperty.call(e, t),
-  d: (e, t) => {
-    for (let a in t) {
-      if (n.o(t, a) && !n.o(e, a)) {
-        Object.defineProperty(e, a, {
-          enumerable: true,
-          get: t[a]
-        });
-      }
+    o: (e, t) => Object.prototype.hasOwnProperty.call(e, t),
+    d: (e, t) => {
+        for (let a in t) {
+            if (n.o(t, a) && !n.o(e, a)) {
+                Object.defineProperty(e, a, {
+                    enumerable: true,
+                    get: t[a]
+                });
+            }
+        }
     }
-  }
 };
 
 function O(e1, t1, n1, o1) {
@@ -56,14 +62,14 @@ function sp(e1) {
 
     var i = function (e) {
         var t = r.call(e, c)
-          , n = e[c];
+            , n = e[c];
         try {
             e[c] = void 0;
             var o = !0
-        } catch (p) {}
+        } catch (p) { }
         var i = a.call(e);
         return o && (t ? e[c] = n : delete e[c]),
-        i
+            i
     }
 
     function o(e) {
@@ -123,49 +129,49 @@ function u(e1, t1, n1, o1) {
 
 
 function l(e, t) {
-            var n = Object.keys(e);
-            if (Object.getOwnPropertySymbols) {
-                var o = Object.getOwnPropertySymbols(e);
-                t && (o = o.filter((function(t) {
-                    return Object.getOwnPropertyDescriptor(e, t).enumerable
-                }
-                ))),
-                n.push.apply(n, o)
-            }
-            return n
+    var n = Object.keys(e);
+    if (Object.getOwnPropertySymbols) {
+        var o = Object.getOwnPropertySymbols(e);
+        t && (o = o.filter((function (t) {
+            return Object.getOwnPropertyDescriptor(e, t).enumerable
         }
+        ))),
+            n.push.apply(n, o)
+    }
+    return n
+}
 
 
 function r(e) {
-        function o(e) {
-            return o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(e) {
-                return typeof e
-            }
-            : function(e) {
+    function o(e) {
+        return o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (e) {
+            return typeof e
+        }
+            : function (e) {
                 return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e
             }
             ,
             o(e)
-        }
+    }
     function i(e, t) {
-            if ("object" !== o(e) || null === e)
-                return e;
-            var n = e[Symbol.toPrimitive];
-            if (void 0 !== n) {
-                var i = n.call(e, t || "default");
-                if ("object" !== o(i))
-                    return i;
-                throw new TypeError("@@toPrimitive must return a primitive value.")
-            }
-            return ("string" === t ? String : Number)(e)
+        if ("object" !== o(e) || null === e)
+            return e;
+        var n = e[Symbol.toPrimitive];
+        if (void 0 !== n) {
+            var i = n.call(e, t || "default");
+            if ("object" !== o(i))
+                return i;
+            throw new TypeError("@@toPrimitive must return a primitive value.")
         }
+        return ("string" === t ? String : Number)(e)
+    }
     var t = i(e, "string");
     return "symbol" === o(t) ? t : String(t)
 }
 
-var o ={
-    Z:function (e, t, n) {
-            return t = r(t),
+var o = {
+    Z: function (e, t, n) {
+        return t = r(t),
             t in e ? Object.defineProperty(e, t, {
                 value: n,
                 enumerable: !0,
@@ -173,68 +179,69 @@ var o ={
                 writable: !0
             }) : e[t] = n,
             e
-        }
+    }
 }
 
- function z(e) {
-            for (var t = 1; t < arguments.length; t++) {
-                var n = null != arguments[t] ? arguments[t] : {};
-                t % 2 ? l(Object(n), !0).forEach((function(t) {
-                    (0,
-                    o.Z)(e, t, n[t])
-                }
-                )) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(n)) : l(Object(n)).forEach((function(t) {
-                    Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(n, t))
-                }
-                ))
-            }
-            return e
+function z(e) {
+    for (var t = 1; t < arguments.length; t++) {
+        var n = null != arguments[t] ? arguments[t] : {};
+        t % 2 ? l(Object(n), !0).forEach((function (t) {
+            (0,
+                o.Z)(e, t, n[t])
         }
+        )) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(n)) : l(Object(n)).forEach((function (t) {
+            Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(n, t))
+        }
+        ))
+    }
+    return e
+}
 
-var encode = function (arg){
-    function start(e) {
-            return a2(r2(c2(e)))
+var encode = function (arg) {
+    var o = 0;
+    function i(e) {
+        return a(r(c(e)))
     }
-    function r2(e) {
-            return s2(b2(p2(e), 8 * e.length))
+    function r(e) {
+        return s(b(p(e), 8 * e.length))
     }
-        function a2(e) {
-            for (var t, n = o ? "0123456789ABCDEF" : "0123456789abcdef", i = "", r = 0; r < e.length; r++)
-                t = e.charCodeAt(r),
+    function a(e) {
+        for (var t, n = o ? "0123456789ABCDEF" : "0123456789abcdef", i = "", r = 0; r < e.length; r++)
+            t = e.charCodeAt(r),
                 i += n.charAt(t >>> 4 & 15) + n.charAt(15 & t);
-            return i
-        }
-        function c2(e) {
-            var t, n, o = "", i = -1;
-            while (++i < e.length)
-                t = e.charCodeAt(i),
+        return i
+    }
+    function c(e) {
+        var t, n, o = "", i = -1;
+        while (++i < e.length)
+            t = e.charCodeAt(i),
                 n = i + 1 < e.length ? e.charCodeAt(i + 1) : 0,
                 55296 <= t && t <= 56319 && 56320 <= n && n <= 57343 && (t = 65536 + ((1023 & t) << 10) + (1023 & n),
-                i++),
+                    i++),
                 t <= 127 ? o += String.fromCharCode(t) : t <= 2047 ? o += String.fromCharCode(192 | t >>> 6 & 31, 128 | 63 & t) : t <= 65535 ? o += String.fromCharCode(224 | t >>> 12 & 15, 128 | t >>> 6 & 63, 128 | 63 & t) : t <= 2097151 && (o += String.fromCharCode(240 | t >>> 18 & 7, 128 | t >>> 12 & 63, 128 | t >>> 6 & 63, 128 | 63 & t));
-            return o
-        }
-        function p2(e) {
-            for (var t = Array(e.length >> 2), n = 0; n < t.length; n++)
-                t[n] = 0;
-            for (n = 0; n < 8 * e.length; n += 8)
-                t[n >> 5] |= (255 & e.charCodeAt(n / 8)) << n % 32;
-            return t
-        }
-        function s2(e) {
-            for (var t = "", n = 0; n < 32 * e.length; n += 8)
-                t += String.fromCharCode(e[n >> 5] >>> n % 32 & 255);
-            return t
-        }
-        function b2(e, t) {
-            e[t >> 5] |= 128 << t % 32,
+        return o
+    }
+    function p(e) {
+        for (var t = Array(e.length >> 2), n = 0; n < t.length; n++)
+            t[n] = 0;
+        for (n = 0; n < 8 * e.length; n += 8)
+            t[n >> 5] |= (255 & e.charCodeAt(n / 8)) << n % 32;
+        return t
+    }
+    function s(e) {
+        for (var t = "", n = 0; n < 32 * e.length; n += 8)
+            t += String.fromCharCode(e[n >> 5] >>> n % 32 & 255);
+        return t
+    }
+    function b(e, t) {
+        e[t >> 5] |= 128 << t % 32,
             e[14 + (t + 64 >>> 9 << 4)] = t;
-            for (var n = 1732584193, o = -271733879, i = -1732584194, r = 271733878, a = 0; a < e.length; a += 16) {
-                var c = n
-                  , p = o
-                  , s = i
-                  , b = r;
-                n = l(n, o, i, r, e[a + 0], 7, -680876936),
+        for (var n = 1732584193, o = -271733879, i = -1732584194, r = 271733878, a = 0; a < e.length; a += 16) {
+            var c = n
+                , p = o
+                , s = i
+                , b = r;
+            n = l(n, o, i, r, e[a + 0], 7, -680876936),
                 r = l(r, n, o, i, e[a + 1], 12, -389564586),
                 i = l(i, r, n, o, e[a + 2], 17, 606105819),
                 o = l(o, i, r, n, e[a + 3], 22, -1044525330),
@@ -302,68 +309,93 @@ var encode = function (arg){
                 o = d(o, p),
                 i = d(i, s),
                 r = d(r, b)
-            }
-            return Array(n, o, i, r)
         }
-        var code=start(arg);
-        return code;
+        return Array(n, o, i, r)
+    }
+    function M(e, t, n, o, i, r) {
+        return d(f(d(d(t, e), d(o, r)), i), n)
+    }
+    function l(e, t, n, o, i, r, a) {
+        return M(t & n | ~t & o, e, t, i, r, a)
+    }
+    function z(e, t, n, o, i, r, a) {
+        return M(t & o | n & ~o, e, t, i, r, a)
+    }
+    function u(e, t, n, o, i, r, a) {
+        return M(t ^ n ^ o, e, t, i, r, a)
+    }
+    function O(e, t, n, o, i, r, a) {
+        return M(n ^ (t | ~o), e, t, i, r, a)
+    }
+    function d(e, t) {
+        var n = (65535 & e) + (65535 & t)
+            , o = (e >> 16) + (t >> 16) + (n >> 16);
+        return o << 16 | 65535 & n
+    }
+    function f(e, t) {
+        return e << t | e >>> 32 - t
+    }
+    function A(e) {
+        return i(e)
+    }
+    var code = A(arg);
+    return code;
 }
 
 function d(e, t, n, o, i) {
-                const r = z({}, e);
-                u(r, null, t, o),
-                n && (u(r, null, n, o));
-                const a = Object.entries(r);
-                a.sort(((e,t)=>{
-                    let[n] = e
-                      , [o] = t;
-                    return n < o ? -1 : n > o ? 1 : 0
-                }
-                )),
-                a.push(["_key", i]);
-                const c = a.map((e=>{
-                    let[t,n] = e;
-                    return `${t}=${n}`
-                }
-                )).join("&")
-                  , p = (0,
-                encode)(c);
-                return p
+    const r = z({}, e);
+    u(r, null, t, o),
+        n && (u(r, null, n, o));
+    const a = Object.entries(r);
+    a.sort(((e, t) => {
+        let [n] = e
+            , [o] = t;
+        return n < o ? -1 : n > o ? 1 : 0
+    }
+    )),
+        a.push(["_key", i]);
+    const c = a.map((e => {
+        let [t, n] = e;
+        return `${t}=${n}`
+    }
+    )).join("&")
+        , p = (0,
+            encode)(c);
+    return p
 }
 
 function h(e, t, n, o, i = 0) {
-  if (o == null) return {};
-  const r = (0, b.Vj)().replace(/-/g, "");
-  const c = Date.now();
-  const p = {
-    nonce: r,
-    timestamp: c + i
-  };
-  debugger
-  const s = d(p, e, t, n, o);
-  const s2 = d(p, e, t, n, o);
-  var a = "nonce=" + r + "timestamp=" + (c + i) + "signature=" + s2.toUpperCase();
-  return a;
+    if (o == null) return {};
+    const r = (0, b.Vj)().replace(/-/g, "");
+    const c = Date.now();
+    const p = {
+        nonce: r,
+        timestamp: c + i
+    };
+    const s = d(p, e, t, n, o);
+    var a = "nonce=" + r + "&timestamp=" + (c + i) + "&signature=" + s.toUpperCase();
+    return a;
 }
 
 const b = {
-  Vj: function de() {
-    let e = Date.now();
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(t) {
-      const n = Math.trunc((e + 16 * Math.random()) % 16);
-      return (e = Math.floor(e / 16), ("x" === t ? n : (3 & n) | 8).toString(16));
-    });
-  }
+    Vj: function de() {
+        let e = Date.now();
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (t) {
+            const n = Math.trunc((e + 16 * Math.random()) % 16);
+            return (e = Math.floor(e / 16), ("x" === t ? n : (3 & n) | 8).toString(16));
+        });
+    }
 };
 
 function myFunction() {
-    var arg1={
-    _time : '1689338768322'
+    var arg1 = {
+        _time: ''
     }
-    var arg2=undefined;
-    var arg3='get';
-    var arg4='DcVoaeCxE7Ss9pwXZGlHwtCyp7SF2lGK';
-  const queryString = h(arg1, arg2, arg3, arg4, -0);
-  console.log(queryString);
+    var arg2 = undefined;
+    var arg3 = 'get';
+    const xn = "D_c_V_o_a_e_C_x_E_7_S_s_9_p_w_X_Z_G_l_H_w_t_C_y_p_7_S_F_2_l_G_K".split("_");
+    var xssKey = xn.join("");
+    const queryString = h(arg1, arg2, arg3, xssKey, -0);
+    console.log(queryString);
 }
 myFunction();

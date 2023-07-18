@@ -1,28 +1,20 @@
 import requests
 import subprocess
-from urllib.parse import urlparse, parse_qs
-
-def get_url_parameter(url, param_name):
-    """
-    从URL中获取指定参数的值
-    """
-    parsed_url = urlparse(url)
-    query_params = parse_qs(parsed_url.query)
-    return query_params.get(param_name, [None])[0]
-
+import re
+import time
 
 def get_params():
     result = subprocess.check_output(['node', 'app.js'])
-    url = result.decode()
-    print(url)
-    nonce = get_url_parameter(url, 'nonce')
-    _time = get_url_parameter(url, 'timestamp')
-    signature = get_url_parameter(url, 'signature')
+    string = result.decode()
+    nonce = re.search(r'nonce=(\w+)', string).group(1)
+    timestamp = re.search(r'timestamp=(\d+)', string).group(1)
+    signature = re.search(r'signature=(\w+)', string).group(1)
     param = {
         "nonce":nonce,
-        "_time":_time,
+        "_time":timestamp,
         "signature":signature
     }
+    print(param)
     return param
 
 def get_headers(signature,timestamp,nonce):
@@ -43,23 +35,21 @@ def get_headers(signature,timestamp,nonce):
     "sec-fetch-site": "same-origin",
     "signature": signature,
     "timestamp": timestamp,
-    "x-requested-with": "XMLHttpRequest",
-    "cookie": "Hm_lvt_2e26229fff5c7d4d4029787caaf3d50b=1689249119,1689337380,1689380715; Hm_lpvt_2e26229fff5c7d4d4029787caaf3d50b=1689383598",
-    "Referer": "https://lhqkl.ydmap.cn/booking/schedule/103909?salesItemId=102914",
-    "Referrer-Policy": "strict-origin-when-cross-origin"
+    "x-requested-with": "XMLHttpRequest"
     }
     return headers;
 
 
-param_result =get_params();
-params = {
-    "_time":param_result["_time"]
-}
+# param_result =get_params();
 
-header = get_headers(param_result["signature"], param_result["_time"], param_result["nonce"]);
+# _timestamp =str(int(time.time() * 1000))
 
-response = requests.get('https://lhqkl.ydmap.cn/v2/querySrvInfo.do', params=params, headers=header)
+# header = get_headers(param_result["signature"], param_result["_time"], param_result["nonce"]);
+# response = requests.get('https://lhqkl.ydmap.cn/v2/querySrvInfo.do?_time=' + str(param_result["_time"]), headers=header)
 
-print(response.text)
+# print(response.text)
 
 
+
+result = subprocess.check_output(['node', 'app.js'])
+string = result.decode()

@@ -1,8 +1,9 @@
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
+// const jsdom = require("jsdom");
+// const { JSDOM } = jsdom;
 
-const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-const window = dom.window;
+// const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+// const window = dom.window;
+
 
 const n = {
     o: (e, t) => Object.prototype.hasOwnProperty.call(e, t),
@@ -15,6 +16,21 @@ const n = {
                 });
             }
         }
+    }
+};
+
+const b = {
+    Vj: function de() {
+        let e = Date.now();
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (t) {
+            const n = Math.trunc((e + 16 * Math.random()) % 16);
+            return (e = Math.floor(e / 16), ("x" === t ? n : (3 & n) | 8).toString(16));
+        });
+    },
+    fo: {
+        "Get": "get",
+        "Post": "post",
+        "PostJSON": "postJSON"
     }
 };
 
@@ -61,6 +77,7 @@ function sp(e1) {
     }
 
     var i = function (e) {
+        const c=window.Symbol.toStringTag;
         var t = r.call(e, c)
             , n = e[c];
         try {
@@ -80,16 +97,30 @@ function sp(e1) {
             a1 = "[object Null]",
             c1 = "[object Undefined]",
             p1 = o1 ? o1.toStringTag : void 0;
-        return null == e ? void 0 === e ? c1 : a1 : p1 && p1 in Object(e) ? i(e) : r1(e);
-    }
+            if (null == e) {
+                if (void 0 === e) {
+                  return c1;
+                } else {
+                  return a1;
+                }
+              } else if (p1 && p1 in Object(e)) {
+                return i(e);
+              } else {
+                return e.toString();
+              }
+            }
 
     if (!r(e1) || o(e1) != a)
         return !1;
-    var t1 = i(e1);
+    var t1 = Object.getPrototypeOf(Object(e1));
     if (null === t1)
         return !0;
     var n1 = b.call(t1, "constructor") && t1.constructor;
-    return "function" == typeof n1 && n1 instanceof n1 && s.call(n1) == M;
+    if ("function" == typeof n1 && n1 instanceof n1 && n1.toString() == Object.toString()) {
+        return true;
+      } else {
+        return false;
+      }
 }
 
 
@@ -365,7 +396,9 @@ function d(e, t, n, o, i) {
 }
 
 function h(e, t, n, o, i = 0) {
-    if (o == null) return {};
+    let i = arguments.length > 4 && void 0 !== arguments[4] ? arguments[4] : 0;
+    if (null == o)
+        return {};
     const r = (0, b.Vj)().replace(/-/g, "");
     const c = Date.now();
     const p = {
@@ -376,16 +409,6 @@ function h(e, t, n, o, i = 0) {
     var a = "nonce=" + r + "&timestamp=" + (c + i) + "&signature=" + s.toUpperCase();
     return a;
 }
-
-const b = {
-    Vj: function de() {
-        let e = Date.now();
-        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (t) {
-            const n = Math.trunc((e + 16 * Math.random()) % 16);
-            return (e = Math.floor(e / 16), ("x" === t ? n : (3 & n) | 8).toString(16));
-        });
-    }
-};
 
 function myFunction() {
     var arg1 = {
@@ -398,4 +421,34 @@ function myFunction() {
     const queryString = h(arg1, arg2, arg3, xssKey, -0);
     console.log(queryString);
 }
-myFunction();
+//myFunction();
+
+
+// function test(){
+//     var p = {
+//         "nonce": "51cb22f25c864bd2a9959f1b22298abc",
+//         "timestamp": 1689671820371
+//     },
+//     e = {
+//         "_time": "1689671820371"
+//     },
+//     t = undefined,
+//     n ='get',
+//     o ='DcVoaeCxE7Ss9pwXZGlHwtCyp7SF2lGK';
+//     const s = d(p, e, t, n, o);
+//     console.log(s);
+// }
+
+// test();
+
+
+function test_de(e) {
+    var r=  "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (t) {
+        const n = Math.trunc((e + 16 * Math.random()) % 16);
+        return (e = Math.floor(e / 16), ("x" === t ? n : (3 & n) | 8).toString(16));
+    });
+    console.log(r);
+}
+
+test_de(1689674982471);
+//9c3fd7b2-61e7-4788-aa3b-9bff8a0f7d50

@@ -1,23 +1,23 @@
-// const jsdom = require("jsdom");
-// const { JSDOM } = jsdom;
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
-// const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-// const window = dom.window;
+const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+const window = dom.window;
 
 
-const n = {
-    o: (e, t) => Object.prototype.hasOwnProperty.call(e, t),
-    d: (e, t) => {
-        for (let a in t) {
-            if (n.o(t, a) && !n.o(e, a)) {
-                Object.defineProperty(e, a, {
-                    enumerable: true,
-                    get: t[a]
-                });
-            }
-        }
-    }
-};
+// const n = {
+//     o: (e, t) => Object.prototype.hasOwnProperty.call(e, t),
+//     d: (e, t) => {
+//         for (let a in t) {
+//             if (n.o(t, a) && !n.o(e, a)) {
+//                 Object.defineProperty(e, a, {
+//                     enumerable: true,
+//                     get: t[a]
+//                 });
+//             }
+//         }
+//     }
+// };
 
 const b = {
     Vj: function de() {
@@ -395,7 +395,7 @@ function d(e, t, n, o, i) {
     return p
 }
 
-function h(e, t, n, o, i = 0) {
+function h(e, t, n, o) {
     let i = arguments.length > 4 && void 0 !== arguments[4] ? arguments[4] : 0;
     if (null == o)
         return {};
@@ -412,7 +412,7 @@ function h(e, t, n, o, i = 0) {
 
 function myFunction() {
     var arg1 = {
-        _time: ''
+        _time: Date.now()
     }
     var arg2 = undefined;
     var arg3 = 'get';
@@ -421,7 +421,7 @@ function myFunction() {
     const queryString = h(arg1, arg2, arg3, xssKey, -0);
     console.log(queryString);
 }
-//myFunction();
+myFunction();
 
 
 // function test(){
@@ -441,14 +441,3 @@ function myFunction() {
 
 // test();
 
-
-function test_de(e) {
-    var r=  "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (t) {
-        const n = Math.trunc((e + 16 * Math.random()) % 16);
-        return (e = Math.floor(e / 16), ("x" === t ? n : (3 & n) | 8).toString(16));
-    });
-    console.log(r);
-}
-
-test_de(1689674982471);
-//9c3fd7b2-61e7-4788-aa3b-9bff8a0f7d50

@@ -45882,7 +45882,7 @@
                     timestamp: c + (i || 0)
                 }
                   , s = yield d(p, e, t, n, o);
-                console.log('e:'+e);
+                console.log('e:'+e._time);
                 console.log('p.nonce:'+p.nonce);
                 console.log('p.time:'+p.timestamp);
                 return Object.assign(p, {
@@ -58900,16 +58900,19 @@
                     configurable: !0,
                     get: function() {
                         var t = c ? c.call(e) : n;
-                        return de.target && (r.depend(),
+                        de.target && (r.depend(),
                         s && (s.dep.depend(),
-                        Array.isArray(t) && Xe(t))),
-                        t
+                        Array.isArray(t) && Xe(t)))
+                        return t;
                     },
                     set: function(t) {
                         var o = c ? c.call(e) : n;
                         t === o || t !== t && o !== o || c && !p || (p ? p.call(e, t) : n = t,
                         s = !i && xe(t),
                         r.notify())
+                        if(t && t.global){
+                             console.log(t.global.duration);
+                        }
                     }
                 })
             }

@@ -15,13 +15,14 @@ class BookingService:
         ResponseDic = json.loads(response.text)
         if(ResponseDic['code'] == 200):
             print("QuerySrvInfo successs")
+            return ResponseDic['data']['serverTime']
         else:
             print(str.format("QuerySrvInfo fail! msg:{0}", ResponseDic['msg']))
         return ResponseDic
 
-    def QuerySalesItemList(self):
-        paramResult = self.paramHelper.getParams(QueryType.SalesItemList);
-        timeSpan = self.paramHelper.getTimeSpan();
+    def QuerySalesItemList(self,ServerTime):
+        paramResult = self.paramHelper.getParams(QueryType.SalesItemList)
+        timeSpan = self.paramHelper.getTimeSpan()
         print(timeSpan)
         header = self.paramHelper.getHeaders(paramResult["signature"], timeSpan, paramResult["nonce"]);
         response = requests.get(URLClass.getSalesItemList + str(paramResult["_time"]), headers=header)

@@ -1,9 +1,9 @@
 from Service.BookingService import BookingService
 
 bookingService = BookingService();
-bookingService.QuerySrvInfo()
+ServerTime=bookingService.QuerySrvInfo()
 
-#bookingService.QuerySalesItemList()
+#bookingService.QuerySalesItemList(ServerTime)
 
 # result = subprocess.check_output(['node', 'app.js'])
 # string = result.decode()

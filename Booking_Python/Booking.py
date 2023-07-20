@@ -1,9 +1,10 @@
 from Service.BookingService import BookingService
+import subprocess
+import execjs
+
 
 bookingService = BookingService();
-ServerTime=bookingService.QuerySrvInfo()
+#bookingService.QuerySrvInfo()
 
-#bookingService.QuerySalesItemList(ServerTime)
+bookingService.QuerySalesItemList()
 
-# result = subprocess.check_output(['node', 'app.js'])
-# string = result.decode()

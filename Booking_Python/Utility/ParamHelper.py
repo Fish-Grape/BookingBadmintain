@@ -2,6 +2,7 @@ import subprocess
 import re
 import time
 from Model.Enum import QueryType
+import execjs
 
 class ParamHelper:
     def __init__(self):
@@ -15,20 +16,31 @@ class ParamHelper:
         filePath = 'JS/' + switcher.get(argument, "srvInfo.js")
         return filePath
 
-    def getParams(self,type):
-        jsFile = self.getJsFileName(type)
-        result = subprocess.check_output(['node', jsFile])
-        string = result.decode()
+    def handleParam(self,string):
         nonce = re.search(r'nonce=(\w+)', string).group(1)
         timestamp = re.search(r'timestamp=(\d+)', string).group(1)
         signature = re.search(r'signature=(\w+)', string).group(1)
         param = {
-            "nonce":nonce,
-            "_time":timestamp,
-            "signature":signature
+            "nonce": nonce,
+            "_time": timestamp,
+            "signature": signature
         }
         print(param)
         return param
+
+    def getSrvInfoParams(self,type):
+        jsFile = self.getJsFileName(type)
+        result = subprocess.check_output(['node', jsFile])
+        string = result.decode()
+        return self.handleParam(string)
+
+    def getSalesItemParams(self,type,now,duration):
+        jsFile = self.getJsFileName(type)
+        with open(jsFile, "r") as f:
+            js_code = f.read()
+        ctx = execjs.compile(js_code)
+        result = ctx.call("Start", now, duration)
+        return self.handleParam(result)
 
     def getHeaders(self,signature,timestamp,nonce):
         headers = {
@@ -53,5 +65,5 @@ class ParamHelper:
         return headers;
 
     def getTimeSpan(self):
-        _timestamp = str(int(time.time() * 1000))
+        _timestamp = int(time.time() * 1000)
         return  _timestamp;

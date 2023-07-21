@@ -28,14 +28,14 @@ class ParamHelper:
         print(param)
         return param
 
-    def getSrvInfoParams(self,type):
-        jsFile = self.getJsFileName(type)
+    def getSingature(self):
+        jsFile = self.getJsFileName(QueryType.SrvInfo)
         result = subprocess.check_output(['node', jsFile])
         string = result.decode()
         return self.handleParam(string)
 
-    def getSalesItemParams(self,type,now,duration):
-        jsFile = self.getJsFileName(type)
+    def getSingatureWithArg(self,now,duration):
+        jsFile = self.getJsFileName(QueryType.SalesItemList)
         with open(jsFile, "r") as f:
             js_code = f.read()
         ctx = execjs.compile(js_code)
@@ -44,23 +44,38 @@ class ParamHelper:
 
     def getHeaders(self,signature,timestamp,nonce):
         headers = {
-        "accept": "application/json, text/plain, */*",
-        "accept-language": "zh-CN,zh;q=0.9",
-        "access-token": "",
-        "cache-control": "no-cache",
-        "entry-tag": "",
-        "nonce": nonce,
-        "openid-token": "",
-        "pragma": "no-cache",
-        "sec-ch-ua": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Windows\"",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
-        "signature": signature,
-        "timestamp": timestamp,
-        "x-requested-with": "XMLHttpRequest"
+            "accept": "application/json, text/plain, */*",
+            "accept-language": "zh-CN,zh;q=0.9",
+            "access-token": "",
+            "cache-control": "no-cache",
+            "entry-tag": "",
+            "nonce": nonce,
+            "openid-token": "",
+            "pragma": "no-cache",
+            "sec-ch-ua": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            "signature": signature,
+            "timestamp": timestamp,
+            "x-requested-with": "XMLHttpRequest"
+        }
+        return headers;
+
+    def getBaseHeaders(self):
+        headers = {
+            "accept": "*/*",
+            "accept-language": "zh-CN,zh;q=0.9",
+            "cache-control": "no-cache",
+            "pragma": "no-cache",
+            "sec-ch-ua": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "script",
+            "sec-fetch-mode": "no-cors",
+            "sec-fetch-site": "cross-site"
         }
         return headers;
 

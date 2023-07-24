@@ -9,9 +9,22 @@ class QueryValidateCode(BaseService):
         pnResponse = self.getPn(configResponse['data']['ac']['pn'])
 
         configObj_D = self.convetToConfigObj(configResponse,pnResponse)
-        configObj_D['bid'] = ''
         print(configObj_D)
+        param_d = self.paramHelper.getValidateParam(configObj_D)
+        print(param_d)
 
+    def sendD(self):
+        header = self.paramHelper.getBaseHeaders();
+        referer = 'https://lhqkl.ydmap.cn/user/login'
+        id = '0908c3b5498d40ed8e17328b88a7d6a9'
+        runEnv = 10
+        loadVersion = '2.2.7'
+        callback = '__JSONP_nddsqc9_0'
+        urlFormat = str.format(URLClass.validateD, referer, id, runEnv, loadVersion, callback)
+        data = {
+
+        }
+        response = requests.post(urlFormat, headers=header,data = data)
 
     # // WM_NIKE = getconf_response.data.ac.token
     # // bid = getconf_response.data.ac.bid

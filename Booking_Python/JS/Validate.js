@@ -583,7 +583,271 @@ var Sb = [
     "D"
 ]
 
+function J() {
+    return (new Date)['getTime']()
+}
+
+function ja(a, b, e) {
+    return function() {
+        var c, l, g;
+        e = e || this;
+        l = J();
+        c = a.apply(e, arguments);
+        g = J();
+        // C.h('bb99db1_7', {
+        //     cursor: b,
+        //     value: g - l
+        // });
+        return c
+    }
+}
+
+var y = window,w = window.document,v = window.navigator;
+function hd() { 
+    function rb(b, f) {
+        for (var e = f.split("."), g = b, l = 0; l < e.length; l++) {
+            if (void 0 == g[e[l]])
+                return;
+            g = g[e[l]]
+        }
+        return g
+    }
+    var d =["_Selenium_IDE_Recorder","_phantom","phantom.injectJs","callPhantom","_selenium","callSelenium","domAutomation","domAutomationController","__nightmare","domAutomationController","context.hashCode","java.lang.System.exit","spawn","Buffer","emit","webdriver"];
+    var f = ["__driver_evaluate","__webdriver_evaluate","__selenium_evaluate","__fxdriver_evaluate","__driver_unwrapped","__webdriver_unwrapped","__selenium_unwrapped","__fxdriver_unwrapped","__webdriver_script_function","__webdriver_script_func","__webdriver_script_fn"];
+    var e = ["selenium","webdriver","driver"];
+
+    for (var g = 0, l = d.length; g < l; g++)
+        if (rb(y, d[g]))
+            return g + 1;
+    d = 0;
+    for (g = f.length; d < g; d++)
+        if (rb(w, f[d]))
+            return d + 50;
+    f = 0;
+    for (d = e.length; f < d; f++)
+        if (w['documentElement']['getAttribute'](e[f]))
+            return f + 100;
+    return !0 === rb(v, 'webdriver') ? 130 : 0
+}
+
+var t = 'STRING',z = 'NUMBER',B ='BOOLEAN',Y ='HEX',H = 'ARRAY',Gb ='CAT_CANVAS';
+var Db = {
+    nb: {
+        f: function() {
+            return true
+        },
+        a: B
+    },
+    hb: {
+        f: function() {
+            var a;
+            try {
+                null[0]()
+            } catch (f) {
+                a = f
+            }
+            // return a && typeof a['stack'] === undefined ? ['phantomjs', undefined, 'nodejs', 'couchjs', 'selenium'].filter(function(b) {
+            //     return ~a['stack'].indexOf(b)
+            // })[0] || '' : ''
+            return '';
+        },
+        a: t
+    },
+    Eb: {
+        f: function() {
+            // for (var d = [undefined, undefined, undefined, undefined, '', '', undefined, 'parent', undefined, undefined, {
+            //     q: undefined,
+            //     n: function() {
+            //         try {
+            //             return y[undefined]('1.01') === 'undefined' && y[undefined](y[undefined]('HI'))
+            //         } catch (d) {
+            //             return !1
+            //         }
+            //     }
+            // }, {
+            //     q: undefined,
+            //     n: function() {
+            //         try {
+            //             return y[undefined](undefined) === undefined && y[undefined](y[undefined]('HI'))
+            //         } catch (d) {
+            //             return !1
+            //         }
+            //     }
+            // }, {
+            //     q: undefined,
+            //     n: function() {
+            //         try {
+            //             return y[undefined](undefined) === '"'
+            //         } catch (a) {
+            //             return !1
+            //         }
+            //     }
+            // }, {
+            //     q: 'decodeURIComponent',
+            //     n: function() {
+            //         try {
+            //             return y['decodeURIComponent'](undefined) === "&"
+            //         } catch (a) {
+            //             return !1
+            //         }
+            //     }
+            // }, {
+            //     q: undefined,
+            //     n: function() {
+            //         try {
+            //             return y[undefined]('"') === undefined
+            //         } catch (a) {
+            //             return !1
+            //         }
+            //     }
+            // }, {
+            //     q: undefined,
+            //     n: function() {
+            //         try {
+            //             return y[undefined]("&") === undefined
+            //         } catch (a) {
+            //             return !1
+            //         }
+            //     }
+            // }, {
+            //     q: undefined,
+            //     n: function() {
+            //         try {
+            //             return y[undefined]("&") === undefined
+            //         } catch (a) {
+            //             return !1
+            //         }
+            //     }
+            // }, {
+            //     q: 'unescape',
+            //     n: function() {
+            //         try {
+            //             return y['unescape'](undefined) === "&"
+            //         } catch (a) {
+            //             return !1
+            //         }
+            //     }
+            // }, {
+            //     q: 'eval',
+            //     n: function() {
+            //         try {
+            //             return y['eval'](undefined) === undefined
+            //         } catch (d) {
+            //             return !1
+            //         }
+            //     }
+            // }, undefined], f = 0, e = d.length; f < e; f++) {
+            //     if (d[f].n)
+            //         if (d[f].n())
+            //             continue;
+            //         else
+            //             return f + undefined;
+            //     if (d[f] && !y[d[f]])
+            //         return f + undefined
+            // }
+            return 0
+        },
+        a: z
+    },
+    gb: {
+        f: function() {
+            var d;
+            // if (!(d = ja(hd, 5, void 0)()))
+            //     a: {
+            //         for (var f in window.document)
+            //             if (w[f]) {
+            //                 try {
+            //                     if (w[f]['cache_'] && f['match'] && f['match'](/\$[a-z]dc_/)) {
+            //                         d = 200;
+            //                         break a
+            //                     }
+            //                 } catch (e) {}
+            //                 d = 0;
+            //                 break a
+            //             }
+            //         d = void 0
+            //     }
+            // if (!d)
+            //     try {
+            //         d = y['external'] && ~y['external'].toString().indexOf('Sequentum') && 201
+            //     } catch (g) {
+            //         d = 0
+            //     }
+            return 0; //d
+        },
+        a: z
+    },
+    Xb: {
+        f: function() {
+            return 7 || 7 || 0;
+            // return y['initWatchman']['version'] || y['initNEWatchman']['version'] || 0
+        },
+        a: z
+    },
+    wb: {
+        f: function() {
+            for (var d = !1, f = w['getElementsByTagName']('script'), e = 0, g = f.length; e < g; e++) {
+                var l = f[e]['src'];
+                if (l && ~l.indexOf('/tool.min.js')) {
+                    d = !0;
+                    break
+                }
+            }
+            return true;  //d
+        },
+        a: B
+    }
+}
+
 var mb = 4,S = 64,Ma = 4;
+
+function wa(a) {
+    for (var e = a.length, d, f; e; )
+        f = Math['floor'](Math['random']() * e--),
+        d = a[e],
+        a[e] = a[f],
+        a[f] = d;
+    return a
+}
+
+function xa(d, f, e) {
+    function fa(d, f) {
+        if (N(d) === 'string') {
+            if (d.length > f) {
+              return d.slice(0, f);
+            } else {
+              return d;
+            }
+          } else if (N(d) === 'array') {
+            if (d.length > f) {
+              return d.slice(-f);
+            } else {
+              return d;
+            }
+          } else {
+            return d;
+          }
+        // return N(d) === 'string' ? d.length > f ? d.slice(0, f) : d : N(d) === 'array' ? d.length > f ? d.slice(-f) : d : d
+    }
+    var c = f.a
+      , l = f.e
+      , u = [];
+    if (!e && (c === 'BOOLEAN' && (u = fa(X(d ? 1 : 2), l)),
+    c === z && (u = fa(X(d), l)),
+    c === Y && (u = fa(Jb(d), l)),
+    c === t && (u = Aa(fa(d, l))),
+    c === H))
+        for (e = 0,
+        c = d.length; e < c; e++) {
+            var m = l[e]
+              , r = d[e];
+            N(d[e]) === 'number' && u.push.apply(u, fa(X(r), m));
+            N(d[e]) === 'string' && u.push.apply(u, Aa(fa(r, m)))
+        }
+    d = fa(X(f.c), 2);
+    f = fa(X(u.length), 2);
+    return d.concat(f, u)
+}
 
 function GetY(a) {
     var e = a ? Cb : Ha(Cb, Dc)
@@ -598,17 +862,8 @@ function GetY(a) {
     return b
 }
 
-
 var fc = 0,config = {};
 function $a() {
-    function wa(a) {
-        for (var e = a.length, d, f; e; )
-            f = Math[b[156]](Math[g[105]]() * e--),
-            d = a[e],
-            a[e] = a[f],
-            a[f] = d;
-        return a
-    }
     function Fc() {
         var c = 255;
         return fc < c ? ++fc : c
@@ -634,37 +889,6 @@ function $a() {
         }
     }
 
-    function N(d) {
-        return null == d ? String(d) : 'string'
-    }
-
-    function xa(d, f, e) {
-        function fa(d, f) {
-            return N(d) === 'string' ? d.length > f ? d.slice(0, f) : d : N(d) === 'array' ? d.length > f ? d.slice(-f) : d : d
-        }
-        var c = f.a
-          , l = f.e
-          , u = [];
-        var Y ='HEX'
-          , z = 'NUMBER'
-          , t = 'STRING'
-          , H = 'ARRAY'
-        if (!e && (c === 'BOOLEAN' && (u = fa(X(d ? 1 : 2), l)),
-        c === z && (u = fa(X(d), l)),
-        c === Y && (u = fa(Jb(d), l)),
-        c === t && (u = Aa(fa(d, l))),
-        c === H))
-            for (e = 0,
-            c = d.length; e < c; e++) {
-                var m = l[e]
-                  , r = d[e];
-                N(d[e]) === 'number' && u.push.apply(u, fa(X(r), m));
-                N(d[e]) === 'string' && u.push.apply(u, Aa(fa(r, m)))
-            }
-        d = fa(X(f.c), 2);
-        f = fa(X(u.length), 2);
-        return d.concat(f, u)
-    }
     function X_k(b) {
         return config.WM_TID
     }
@@ -674,7 +898,7 @@ function $a() {
 
     var d = {
         ma: config.bid,//bid
-        C:'',//'CFpjJ6mjFztBVERRVBKRhi9IEuonOJCX'
+        //C:'',//'CFpjJ6mjFztBVERRVBKRhi9IEuonOJCX'
         pn: config.pn,//YD00882347255573
     }
                       , f = X_k('WM_TID')
@@ -688,7 +912,7 @@ function $a() {
                         Lb: Fc(),
                         Db: ab(),
                         Ub: Number.parseInt(Date.now()/ 1000),
-                        Oa: config.v,//Fc,
+                        Oa: config.luv,//Fc,
                         Pa: q,
                         Ma: l,
                         Zb: f,
@@ -696,15 +920,14 @@ function $a() {
                         cb: e,
                         Kb: u,
                         Wa: void 0,
-                        Xa: ["c","d","f","d","4","f","6","0"], //
-                        Ya: '7,d,4,6,5,7,3,6',
+                        Xa: 'cdfd4f60', //
+                        Ya: '7d465736',
                         Za: '40b59b10',
                         $a: void 0
                     }
                       , r = [];
                     console.log(m);
                     wa(Object.keys(m)).forEach(function(d) {
-                        // 800 ~ 804 = string
                         N(m[d]) !== 'undefined' && (typeof d == 'string' && (m[d] = Jc(m[d])),
                         '',
                         r.push.apply(r, xa(m[d], ca[d])))
@@ -713,18 +936,17 @@ function $a() {
 }
 
 function D(d) {
-    var a_284= -128
-        ,a128 = 128
-        ,a127 = 127
-        ,a_129 = 129
-        ,c1001 = '1001'
-    if (d < a_284)
-        return D(a128 - (a_284 - d));
-    if (d >= a_284 && d <= a127)
+    if (d < -128)
+        return D(128 - (-128 - d));
+    if (d >= -128 && d <= 127)
         return d;
-    if (d > a127)
-        return D(a_129 + d - a127);
-    throw Error(c1001);
+    if (d > 127)
+        return D(-129 + d - 127);
+    throw Error('1001');
+}
+
+function N(d) {
+    return null == d ? String(d) : toString.call(d).slice(8, -1).toLowerCase();
 }
 
 function X(d) {
@@ -1011,6 +1233,330 @@ function Tb(data, array, encoding) {
     }
 }
 
+function ba(a) {
+    var b = a ? Db : [] //Ha(Db, Bc)
+      , e = [];
+    try {
+        wa(Object.keys(b)).forEach(function(a) {
+            var d = b[a].f();
+            e.push.apply(e, xa(d, ca[a]))
+        })
+    } catch (q) {}
+    return e
+}
+
+var Ya = {
+    $b: {
+        f: function() {
+            // return v[b[361]] || c[0]
+            return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        },
+        a: t
+    },
+    zb: {
+        f: function() {
+            // return v[c[161]] || c[0]
+            return 'zh-CN'
+        },
+        a: t
+    },
+    Ta: {
+        f: function() {
+            // return Fa[b[215]] || a[0]
+            return 24
+        },
+        a: z
+    },
+    bb: {
+        f: function() {
+            // return md || a[0]
+            return 1
+        },
+        a: z
+    },
+    Vb: {
+        f: function() {
+            // return Math[b[122]]((new Ca)[c[134]]() / a[141] * a[674] + a[40])
+            return 20
+        },
+        a: z
+    },
+    Pb: {
+        f: function() {
+            // return !!ld
+            return true;
+        },
+        a: B
+    },
+    Cb: {
+        f: function() {
+            // return !!qa
+            return true;
+        },
+        a: B
+    },
+    tb: {
+        f: function() {
+            // return !!nd
+            return true;
+        },
+        a: B
+    },
+    Ea: {
+        f: function() {
+            // var a = w[b[81]];
+            // return a && !!a[b[130]]
+            return false;
+        },
+        a: B
+    },
+    Fb: {
+        f: function() {
+            // return !!od
+            return true
+        },
+        a: B
+    },
+    Va: {
+        f: function() {
+            // return v[c[234]] || c[0]
+            return ''
+        },
+        a: t
+    },
+    Ib: {
+        f: function() {
+            // return v[b[433]] || c[0]
+            return 'Win32'
+        },
+        a: t
+    },
+    eb: {
+        f: function() {
+            // return v[c[128]] ? v[c[128]] : v.yc ? v.yc : qc ? qc : b[352]
+            return 'unknown'
+        },
+        a: t
+    },
+    Jb: {
+        f: function() {
+            // var a = fd ? dd() : jc();
+            // return za(a.join(c[150]))
+            return 'b69f0e3afa15fb947efef61ec84603ce'
+        },
+        u: !0,
+        a: Y
+    },
+    Qa: {
+        f: function() {
+            // return d
+            return '52c61919c664acea5cf42a335025fabc'
+        },
+        a: Y,
+        u: !0,
+        T: Gb
+    },
+    // dc: {
+    //     f: function() {
+    //         // return a ? za(bd().join(c[150])) : c[0]
+    //         return 
+    //     },
+    //     a: Y,
+    //     u: !0,
+    //     T: Hb
+    // },
+    Da: {
+        f: function() {
+            // return e
+            return false
+        },
+        a: B,
+        u: !0
+    },
+    pb: {
+        f: function() {
+            return true
+        },
+        a: B
+    },
+    ob: {
+        f: function() {
+            // return f && P !== b[174] && P !== b[221] ? !0 : !1
+            return false
+        },
+        a: B
+    },
+    Yb: {
+        f: function() {
+            // return d > a[0] || f || g
+            return false
+        },
+        a: B
+    },
+    Mb: {
+        f: function() {
+            // return rd
+            return 2
+        },
+        a: z
+    },
+    Ua: {
+        f: function() {
+            // return !!v[b[385]]
+            return true
+        },
+        a: B
+    },
+    xb: {
+        f: function() {
+            return false
+        },
+        a: B
+    },
+    Fa: {
+        f: function() {
+            // return v[b[389]] || c[0]
+            return 'Mozilla'
+        },
+        a: t
+    },
+    Ga: {
+        f: function() {
+            // return v[c[76]] || c[0]
+            return ''
+        },
+        a: t
+    },
+    Ha: {
+        f: function() {
+            // return v[c[233]] || c[0]
+            return 'Netscape'
+        },
+        a: t
+    },
+    Ia: {
+        f: function() {
+            // return v[b[307]] || c[0]
+            return '5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        },
+        a: t
+    },
+    Ab: {
+        f: function() {
+            // return v[b[206]] || c[0]
+            return 'zh-CN,zh'
+        },
+        a: t
+    },
+    Sb: {
+        f: function() {
+            // return v[b[205]] || c[0]
+            return ''
+        },
+        a: t
+    },
+    ac: {
+        f: function() {
+            // return v[b[191]] || c[0]
+            return ''
+        },
+        a: t
+    },
+    Na: {
+        f: function() {
+            // return v[b[93]] || c[0]
+            return ''
+        },
+        a: t
+    },
+    Gb: {
+        f: function() {
+            // return v[b[314]] || c[0]
+            return ''
+        },
+        a: t
+    },
+    fb: {
+        f: function() {
+            // return w[b[64]] || w[b[140]] || c[0]
+            return 'CSS1Compat'
+        },
+        a: t
+    },
+    // jb: {
+    //     f: function() {
+    //         // return za(fc().join(c[150]))
+    //         return 
+    //     },
+    //     a: Y,
+    //     u: !0,
+    //     T: Za
+    // },
+    // ib: {
+    //     f: function() {
+    //         // return fc().length || a[0]
+    //         return 
+    //     },
+    //     a: z,
+    //     u: !0,
+    //     T: Za
+    // },
+    mb: {
+        f: function() {
+            // return v[b[61]] || a[0]
+            return 20
+        },
+        a: z
+    },
+    Nb: {
+        f: function() {
+            // return [d > c ? d : c, d > c ? c : d, e > g ? e : g, e > g ? g : e]
+            return [1920,1080,1920,1032]
+        },
+        a: H
+    },
+    // La: {
+    //     f: function(a) {
+    //         // return hc ? cd(a) : a(c[0])
+    //         return 
+    //     },
+    //     a: t,
+    //     Ja: !0,
+    //     u: !0
+    // }
+}
+
+function Get_e(){
+    var Va = [];
+    Object.keys(Ya).forEach(function(a) {
+        var d = Ya[a];
+        d.pc = a;
+        Va.push(d)
+    });
+    function f() {
+        Eb >= Va.length && (Fb = !0,
+        Wa = Xa(wa(e), function(a, d) {
+            a.push.apply(a, d);
+            return a
+        }, []),
+        d(Wa))
+    }
+    var e=[];
+    Va.forEach(function(d) {
+        function a(b) {
+            e.push(xa(b, ca[d.pc], false));
+            // Eb++;
+            // f()
+        }
+        try {
+            console.log('name:'+d.pc+',a:'+d.a+',f:'+d.f());
+            a(d.f());
+        } catch (l) {
+            console.log('can not get value!');
+        }
+    })
+    console.log('e:'+e);
+}
 
 function StartB(){
     var d= $a()
@@ -1024,13 +1570,18 @@ function StartB(){
 
 
 function StartD(configObj){
-    config = configObj
-    var d= $a()
-    ,y = GetY()
-    ,w=[];
+    debugger
+    delete configObj.bid;
+    config = configObj;
+    var f= $a()
+     ,g = ba(true)
+     ,e = Get_e();
 
-    d = d.concat(y, w)
-    var param_d=lb(d);
-    return param_d;
+    // f = f.concat(g, e)
+    // var param_d=lb(d);
+    // return param_d;
+    console.log(e)
+    return f;
 }
+StartD({'bid': '', 'pn': 'YD00882347255573', 'WM_DID': '', 'WM_TID': '', 'v': '2.7.5_af2952a4', 'luv': '2.7.5_e2891084'})
 //v:602a5ad7             

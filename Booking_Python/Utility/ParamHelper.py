@@ -12,6 +12,7 @@ class ParamHelper:
         switcher = {
             QueryType.SrvInfo: "srvInfo.js",
             QueryType.SalesItemList: "QuerySalesItem.js",
+            QueryType.ValidateCode: "Validate.js",
         }
         filePath = 'JS/' + switcher.get(argument, "srvInfo.js")
         return filePath
@@ -82,3 +83,11 @@ class ParamHelper:
     def getTimeSpan(self):
         _timestamp = int(time.time() * 1000)
         return  _timestamp;
+
+    def getValidateParam(self,configObj):
+        jsFile = self.getJsFileName(QueryType.ValidateCode)
+        with open(jsFile, "r") as f:
+            js_code = f.read()
+        ctx = execjs.compile(js_code)
+        result = ctx.call("StartD", configObj)
+        return result

@@ -1040,6 +1040,7 @@ function Xa(array, callback) {
 }
 
 function Yb(array) {
+    var Xc =[-82,-40,-10,60,-127,-56,-9,-116,95,44,-120,-19,67,8,-20,-26,105,-43,-46,-58,54,118,-72,97,112,-27,63,-117,-52,127,-89,-8,64,39,38,-115,-59,33,-64,75,-25,115,72,-68,-79,55,-97,-23,-35,71,-7,124,-103,84,-110,-60,-95,11,119,-12,107,34,19,-74,2,68,28,-21,-67,109,117,85,49,-32,-49,-122,12,-62,-2,-78,59,-91,-92,-37,27,18,-126,-28,23,116,14,-76,-80,-55,-94,126,-13,48,-87,-119,-100,76,104,47,-16,114,29,-57,25,16,17,-84,98,-45,13,-51,92,70,36,-96,88,125,7,69,78,-48,-83,45,-63,4,-14,96,120,-106,15,9,87,-108,-31,-36,40,-1,-66,81,-22,-11,106,-99,-114,121,77,-121,1,-39,-70,-44,-105,-85,58,-101,32,-47,-73,-109,-88,-38,37,0,102,-54,122,-125,-112,51,111,-61,22,113,26,-53,94,31,-102,73,52,30,-75,93,5,99,-34,-90,21,24,46,43,-77,91,-4,57,83,-107,3,-50,-18,-6,41,110,42,-41,-24,56,-86,-5,50,-124,-118,53,-65,100,-123,6,-81,62,66,-113,-128,-29,-15,108,-3,74,-33,-30,-104,103,-93,86,101,79,80,90,-17,65,82,35,89,10,20,-42,-111,123,-69,61,-71,-98];
     void 0 === array && (array = []);
     if (!array.length)
         return [];
@@ -1515,47 +1516,50 @@ var Ya = {
         },
         a: H
     },
-    // La: {
-    //     f: function(a) {
-    //         // return hc ? cd(a) : a(c[0])
-    //         return 
-    //     },
-    //     a: t,
-    //     Ja: !0,
-    //     u: !0
-    // }
+    La: {
+        f: function(a) {
+            // return hc ? cd(a) : a(c[0])
+            return ''
+        },
+        a: t,
+        Ja: !0,
+        u: !0
+    }
 }
 
 function Get_e(){
-    var Va = [];
+    var Va = [],Wa = [],Eb = 0;
     Object.keys(Ya).forEach(function(a) {
         var d = Ya[a];
         d.pc = a;
         Va.push(d)
     });
     function f() {
-        Eb >= Va.length && (Fb = !0,
+        Eb >= Va.length && (
         Wa = Xa(wa(e), function(a, d) {
             a.push.apply(a, d);
             return a
         }, []),
-        d(Wa))
+        console.log('Wa:'+Wa))
     }
     var e=[];
     Va.forEach(function(d) {
-        function a(b) {
-            e.push(xa(b, ca[d.pc], false));
-            // Eb++;
-            // f()
+        function q() {
+            function a(b) {
+                e.push(xa(b, ca[d.pc], false));
+                Eb++;
+                f()
+            }
+            try {
+                console.log('name:'+d.pc+',a:'+d.a+',f:'+d.f());
+                a(d.f());
+            } catch (l) {
+                console.log('can not get value!');
+            }
         }
-        try {
-            console.log('name:'+d.pc+',a:'+d.a+',f:'+d.f());
-            a(d.f());
-        } catch (l) {
-            console.log('can not get value!');
-        }
+        d.u ? setTimeout(q, 0) : q()
     })
-    console.log('e:'+e);
+    console.log('e.length:'+e.length);
 }
 
 function StartB(){
@@ -1577,11 +1581,10 @@ function StartD(configObj){
      ,g = ba(true)
      ,e = Get_e();
 
-    // f = f.concat(g, e)
-    // var param_d=lb(d);
-    // return param_d;
-    console.log(e)
-    return f;
+    f = f.concat(e, g)
+    var param_d=lb(f);
+    console.log(param_d)
+    return param_d;
 }
 StartD({'bid': '', 'pn': 'YD00882347255573', 'WM_DID': '', 'WM_TID': '', 'v': '2.7.5_af2952a4', 'luv': '2.7.5_e2891084'})
 //v:602a5ad7             

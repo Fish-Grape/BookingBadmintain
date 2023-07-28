@@ -1,3 +1,9 @@
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
+const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+const window = dom.window;
+
 var ca={
     "bc": {
         "c": 0,
@@ -849,17 +855,127 @@ function xa(d, f, e) {
     return d.concat(f, u)
 }
 
+var Bc = {
+    sb: {
+        f: function() {
+            return 1
+        },
+        a: z
+    },
+    kb: {
+        f: function() {
+            return 1
+        },
+        a: z
+    },
+    vb: {
+        f: function() {
+            return 4
+        },
+        a: z
+    },
+    Ob: {
+        f: function() {
+            return 16
+        },
+        a: z
+    },
+    qb: {
+        f: function() {
+            return 5
+        },
+        a: z
+    },
+    Wb: {
+        f: function() {
+            return '登陆'
+        },
+        a: t
+    },
+    yb: {
+        f: function() {
+            return ''
+        },
+        a: t
+    },
+    Tb: {
+        f: function() {
+            return 121150
+        },
+        a: z
+    },
+    rb: {
+        f: function() {
+            return 132399
+        },
+        a: z
+    },
+    ub: {
+        f: function() {
+            // return C[b[163]].$[0]
+            return 6
+        },
+        a: z
+    },
+    lb: {
+        f: function() {
+            return [3,0,12117,31151,0]
+        },
+        a: H
+    },
+    Hb: {
+        f: function() {
+            return [1,13,560];
+        },
+        a: H
+    },
+    Sa: {
+        f: function() {
+            return [1845,910];
+        },
+        a: H
+    },
+    Qb: {
+        f: function() {
+            return 1
+        },
+        a: z
+    },
+    cc: {
+        f: function() {
+            // var t =J() - config.Ic;
+            var t = Math.floor(Math.random() * 3000);
+            console.log('cc.f:'+t);
+            return t
+        },
+        a: z
+    }
+}
+
+function Ha(a, b) {
+    for (var e in b)
+        !b.hasOwnProperty(e) || (a[e] = b[e]);
+    return a
+}
+
 function GetY(a) {
-    var e = a ? Cb : Ha(Cb, Dc)
-      , b = [];
+    var b = a ? Db : Ha(Db, Bc)
+    , e = [];
     try {
-        wa(Object.keys(e)).forEach(function(a) {
-            var c = e[a].f();
-            f[0];
-            b.push.apply(b, xa(c, da[a]))
+        wa(Object.keys(b)).forEach(function(a) {
+            var d = b[a].f();
+            e.push.apply(e, xa(d, ca[a]))  
         })
-    } catch (t) {}
-    return b
+    } catch (q) {}
+    return e
+}
+
+function ab() {
+    var b='xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx';
+    return b.replace(/[xy]/g, function(c) {
+        var e = Math['random']() * 16 | 0;
+        return (c === 'x' ? e : e & 3 | 8).toString(16)
+    })
 }
 
 var fc = 0,config = {};
@@ -867,13 +983,6 @@ function $a() {
     function Fc() {
         var c = 255;
         return fc < c ? ++fc : c
-    }
-    function ab() {
-        var b='xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx';
-        return b.replace(/[xy]/g, function(c) {
-            var e = Math['random']() * 16 | 0;
-            return (c === 'x' ? e : e & 3 | 8).toString(16)
-        })
     }
 
     function Jc(a) {
@@ -898,7 +1007,7 @@ function $a() {
 
     var d = {
         ma: config.bid,//bid
-        //C:'',//'CFpjJ6mjFztBVERRVBKRhi9IEuonOJCX'
+        C: config.C,//random length = 32
         pn: config.pn,//YD00882347255573
     }
                       , f = X_k('WM_TID')
@@ -1339,41 +1448,6 @@ var Ya = {
         },
         a: t
     },
-    Jb: {
-        f: function() {
-            // var a = fd ? dd() : jc();
-            // return za(a.join(c[150]))
-            return 'b69f0e3afa15fb947efef61ec84603ce'
-        },
-        u: !0,
-        a: Y
-    },
-    Qa: {
-        f: function() {
-            // return d
-            return '52c61919c664acea5cf42a335025fabc'
-        },
-        a: Y,
-        u: !0,
-        T: Gb
-    },
-    // dc: {
-    //     f: function() {
-    //         // return a ? za(bd().join(c[150])) : c[0]
-    //         return 
-    //     },
-    //     a: Y,
-    //     u: !0,
-    //     T: Hb
-    // },
-    Da: {
-        f: function() {
-            // return e
-            return false
-        },
-        a: B,
-        u: !0
-    },
     pb: {
         f: function() {
             return true
@@ -1516,6 +1590,41 @@ var Ya = {
         },
         a: H
     },
+    Jb: {
+        f: function() {
+            // var a = fd ? dd() : jc();
+            // return za(a.join(c[150]))
+            return 'b69f0e3afa15fb947efef61ec84603ce'
+        },
+        u: !0,
+        a: Y
+    },
+    Qa: {
+        f: function() {
+            // return d
+            return '52c61919c664acea5cf42a335025fabc'
+        },
+        a: Y,
+        u: !0,
+        T: Gb
+    },
+    // dc: {
+    //     f: function() {
+    //         // return a ? za(bd().join(c[150])) : c[0]
+    //         return 
+    //     },
+    //     a: Y,
+    //     u: !0,
+    //     T: Hb
+    // },
+    Da: {
+        f: function() {
+            // return e
+            return false
+        },
+        a: B,
+        u: !0
+    },
     La: {
         f: function(a) {
             // return hc ? cd(a) : a(c[0])
@@ -1524,7 +1633,7 @@ var Ya = {
         a: t,
         Ja: !0,
         u: !0
-    }
+    },
 }
 
 function Get_e(){
@@ -1557,24 +1666,42 @@ function Get_e(){
                 console.log('can not get value!');
             }
         }
-        d.u ? setTimeout(q, 0) : q()
+        // d.u ? setTimeout(q, 0) : q()
+        q();
     })
     console.log('e.length:'+e.length);
+    return Wa;
 }
 
-function StartB(){
+function StartB(configObj){
+    config = configObj;
+    config.C = ab();
+    config.Ic = J();
     var d= $a()
     ,y = GetY()
     ,w=[];
 
     d = d.concat(y, w)
     var param_d=lb(d);
-    return param_d;
+    var result={
+        'd': param_d,
+        'v': Get_v(config.v),
+        'cb': Get_cb()
+    }
+    console.log(result)
+    return result;
 }
 
 
+function Get_cb(){
+    return '__wmjsonp_' + ab().slice(2, 9);
+}
+
+function Get_v(v){
+    return v.split('_')[1];
+}
+
 function StartD(configObj){
-    debugger
     delete configObj.bid;
     config = configObj;
     var f= $a()
@@ -1584,7 +1711,14 @@ function StartD(configObj){
     f = f.concat(e, g)
     var param_d=lb(f);
     console.log(param_d)
-    return param_d;
+    var result={
+        'd': param_d,
+        'v': Get_v(config.v),
+        'cb': Get_cb()
+    }
+    return result;
 }
-StartD({'bid': '', 'pn': 'YD00882347255573', 'WM_DID': '', 'WM_TID': '', 'v': '2.7.5_af2952a4', 'luv': '2.7.5_e2891084'})
-//v:602a5ad7             
+
+
+
+//v:e2891084             

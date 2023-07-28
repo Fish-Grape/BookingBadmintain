@@ -36,12 +36,10 @@ class ParamHelper:
         return self.handleParam(string)
 
     def getSingatureWithArg(self,now,duration):
-        jsFile = self.getJsFileName(QueryType.SalesItemList)
-        with open(jsFile, "r") as f:
-            js_code = f.read()
-        ctx = execjs.compile(js_code)
+        ctx = self.getJSctx(QueryType.SalesItemList)
         result = ctx.call("Start", now, duration)
         return self.handleParam(result)
+
 
     def getHeaders(self,signature,timestamp,nonce):
         headers = {
@@ -84,10 +82,57 @@ class ParamHelper:
         _timestamp = int(time.time() * 1000)
         return  _timestamp;
 
-    def getValidateParam(self,configObj):
-        jsFile = self.getJsFileName(QueryType.ValidateCode)
+    def getJSctx(self,type):
+        jsFile = self.getJsFileName(type)
         with open(jsFile, "r") as f:
             js_code = f.read()
         ctx = execjs.compile(js_code)
+        return ctx
+
+    def getValidateParam_d(self,configObj):
+        ctx = self.getJSctx(QueryType.ValidateCode)
         result = ctx.call("StartD", configObj)
+        return result
+
+    def getValidateParam_b(self,configObj):
+        ctx = self.getJSctx(QueryType.ValidateCode)
+        result = ctx.call("StartB", configObj)
+        return result
+
+    def getValidate_cb(self):
+        ctx = self.getJSctx(QueryType.ValidateCode)
+        result = ctx.call("Get_cb")
+        return result
+
+    def getValidateParam_ref(self,configObj):
+        data = {
+            'referer': 'https://lhqkl.ydmap.cn/user/login',
+            'zoneId': 'CN31',
+            'acToken': '',
+            'id': '0908c3b5498d40ed8e17328b88a7d6a9',
+            'fp': '',
+            'https': 'true',
+            'type': 'undefined',
+            'version': '2.21.5',
+            'dpr': '1',
+            'dev': '1',
+            'cb': 'YeJ5RMuytQ+CBcgsAL9uqeoZ/IqSiEyk+OnZpNSBAAxriYKqpNHxsuTGDHbDb8Zs',
+            'ipv6': 'false',
+            'runEnv': '10',
+            'group': '',
+            'scene': '',
+            'lang': 'zh-CN',
+            'sdkVersion': 'undefined',
+            'width': '0',
+            'audio': 'false',
+            'sizeType': '10',
+            'smsVersion': 'v3',
+            'token': '',
+            'callback': '__JSONP_gxfllly_0'
+        }
+
+        result = '&'.join([f'{key}={value}' for key, value in data.items()])
+        print(result)
+        ctx = self.getJSctx(QueryType.ValidateCode)
+        result = ctx.call("StartB", configObj)
         return result

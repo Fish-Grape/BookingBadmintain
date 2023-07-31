@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-Hans" translate="no">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover"/>
+        <meta name="x5-fullscreen" content="true"/>
+        <meta name="”full-screen”" content="”yes”"/>
+        <link rel="dns-prefetch" href="//image.ydmap.cn"/>
+        <link rel="dns-prefetch" href="//cdnimg.ydmap.cn"/>
+        <link rel="dns-prefetch" href="//cdnstatic.ydmap.cn"/>
+        <title>加载中...</title>
+        <style>
+            /* 没有上传时默认使用 */
+            [class*='icon-pt-item-'] {
+                color: #999;
+            }
+
+            [class*='icon-pt-item-']::before {
+                content: '\e6b6';
+            }
+
+            .spin-container {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .spin-loading {
+                position: relative;
+                color: #c8c9cc;
+                font-size: 0;
+                vertical-align: middle;
+            }
+
+            @keyframes spin-rotate {
+                0% {
+                    transform: rotate(0);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes spin-circular {
+                0% {
+                    stroke-dasharray: 1, 200;
+                    stroke-dashoffset: 0;
+                }
+
+                50% {
+                    stroke-dasharray: 90, 150;
+                    stroke-dashoffset: -40;
+                }
+
+                to {
+                    stroke-dasharray: 90, 150;
+                    stroke-dashoffset: -120;
+                }
+            }
+
+            .spin-loading__spinner {
+                position: relative;
+                display: inline-block;
+                width: 30px;
+                max-width: 100%;
+                height: 30px;
+                max-height: 100%;
+                vertical-align: middle;
+                animation: spin-rotate 0.8s linear infinite;
+            }
+
+            .spin-loading__spinner--circular {
+                animation-duration: 2s;
+            }
+
+            .spin-loading__circular {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            .spin-loading__circular circle {
+                animation: spin-circular 1.5s ease-in-out infinite;
+                stroke: currentColor;
+                stroke-width: 3;
+                stroke-linecap: round;
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdnstatic.ydmap.cn/static/normalize.css/8.0.1/normalize.css"/>
+        <link rel="stylesheet" href="https://cdnstatic.ydmap.cn/static/element-ui/2.15.13/lib/theme-chalk/index.css"/>
+        <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_726050_mzrm8vx8b8j.css"/>
+        <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_3358198_w4fdwi2u3eo.css"/>
+        <script defer="defer" src="https://cdnstatic.ydmap.cn/static/ua-parser-js/1.0.35/dist/ua-parser.min.js"></script>
+        <script defer="defer" src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+        <script defer="defer" src="https://cdnstatic.ydmap.cn/static/jsencrypt/3.3.2/bin/jsencrypt.min.js"></script>
+        <script defer="defer" src="https://cdn.ydmap.cn/json/homeTown.js?_time=1690731387564"></script>
+        <script defer="defer" type="module" src="/js/chunk-vendors.fcb474a3.js"></script>
+        <script defer="defer" type="module" src="/js/app.c49903af.js"></script>
+        <link href="/css/chunk-vendors.10f33f05.css" rel="stylesheet">
+        <link href="/css/app.9afc442b.css" rel="stylesheet">
+        <script defer="defer" src="/js/chunk-vendors-legacy.01a5ce7e.js" nomodule></script>
+        <script defer="defer" src="/js/app-legacy.8df59271.js" nomodule></script>
+        <script>
+                (function() {
+                    'use strict';
+                    var fp_hook = "";
+                    Object.defineProperty(window,'gdxidpyhxde',{
+                        set:function(val){
+                            console.log("fp参数的值为: ", val);
+                            debugger;
+                            this._value = val;
+                            return val;
+                        },
+                        get:function(){
+                            return fp_hook;
+                        }
+                    });
+                })();
+        </script>
+    </head>
+    <body class="theme-default">
+        <noscript>
+            <strong>您需要启用浏览器的JavaScript功能才能正常使用</strong>
+        </noscript>
+        <div id="app" data-commit-id="8b16953c">
+            <div class="spin-container">
+                <div class="spin-loading spin-loading--circular" aria-live="polite" aria-busy="true">
+                    <span class="spin-loading__spinner spin-loading__spinner--circular">
+                        <svg class="spin-loading__circular" viewBox="25 25 50 50">
+                            <circle cx="50" cy="50" r="20" fill="none"></circle>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-safe-area-block"></div>
+    </body>
+</html>

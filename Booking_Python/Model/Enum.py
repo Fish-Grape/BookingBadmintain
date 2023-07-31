@@ -6,6 +6,7 @@ class QueryType(Enum):
     SalesItemList = 2
     MyInfo = 3
     ValidateCode = 4
+    CoreV2 = 5
 
 class IndexType(Enum):
     CurlyBrackets = 1,

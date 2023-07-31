@@ -4,6 +4,10 @@ import time
 from Model.Enum import QueryType
 import execjs
 
+from Resource.URLClass import URLClass
+from Utility.FileHelper import FileHelper
+
+
 class ParamHelper:
     def __init__(self):
         pass
@@ -13,6 +17,7 @@ class ParamHelper:
             QueryType.SrvInfo: "srvInfo.js",
             QueryType.SalesItemList: "QuerySalesItem.js",
             QueryType.ValidateCode: "Validate.js",
+            QueryType.CoreV2: "CoreV2.js",
         }
         filePath = 'JS/' + switcher.get(argument, "srvInfo.js")
         return filePath
@@ -104,19 +109,24 @@ class ParamHelper:
         result = ctx.call("Get_cb")
         return result
 
+    def getParam_callBack(self):
+        ctx = self.getJSctx(QueryType.ValidateCode)
+        callback = ctx.call("Get_callBack")
+        return callback
+
     def getValidateParam_ref(self,configObj):
         data = {
-            'referer': 'https://lhqkl.ydmap.cn/user/login',
+            'referer': URLClass.referer_login,
             'zoneId': 'CN31',
             'acToken': '',
-            'id': '0908c3b5498d40ed8e17328b88a7d6a9',
+            'id': URLClass.param_id,
             'fp': '',
             'https': 'true',
             'type': 'undefined',
             'version': '2.21.5',
             'dpr': '1',
             'dev': '1',
-            'cb': 'YeJ5RMuytQ+CBcgsAL9uqeoZ/IqSiEyk+OnZpNSBAAxriYKqpNHxsuTGDHbDb8Zs',
+            'cb': '',
             'ipv6': 'false',
             'runEnv': '10',
             'group': '',
@@ -128,11 +138,46 @@ class ParamHelper:
             'sizeType': '10',
             'smsVersion': 'v3',
             'token': '',
-            'callback': '__JSONP_gxfllly_0'
+            'callback': ''
         }
-
-        result = '&'.join([f'{key}={value}' for key, value in data.items()])
-        print(result)
         ctx = self.getJSctx(QueryType.ValidateCode)
-        result = ctx.call("StartB", configObj)
+        data['callback'] = ctx.call("Get_ref_callBack")
+        data['acToken'] = ctx.call("Get_acToken", configObj['WM_DID'])
+        ctx = self.getJSctx(QueryType.CoreV2)
+        data['cb'] = ctx.call("Get_cb")
+        result = '&'.join([f'{key}={value}' for key, value in data.items()])
         return result
+
+    def getValidateParam_check(self,configObj):
+        data = {
+            'referer': URLClass.referer_login,
+            'zoneId': 'CN31',
+            'id': URLClass.param_id,
+            'token': 'd80cdd88091a483baf06c7297af3a14d',
+            'acToken': 'undefined',
+            'data': {"d":"","m":"","p":"OTW2AMth8pgLCw\\vqIiHTzPjz/vbmUZYha5T9p33","ext":"nSmcCSfMDZJLaTF0umBMvd4dnVlgxYK5"},
+            'width': '640',
+            'type': '2',
+            'version': '2.21.5',
+            'cb': '',
+            'extraData': '',
+            'bf': '0',
+            'runEnv': '10',
+            'sdkVersion': 'undefined',
+            'callback': '__JSONP_j25w5pr_4'
+        }
+        ctx = self.getJSctx(QueryType.ValidateCode)
+        data['callback'] = ctx.call("Get_callBack")
+        data['token'] = ''
+        ctx = self.getJSctx(QueryType.CoreV2)
+        data['cb'] = ctx.call("Get_cb")
+        result = '&'.join([f'{key}={value}' for key, value in data.items()])
+        return result
+
+    def getValidate_gap(self,data):
+        fileHelper = FileHelper()
+        img_bg = fileHelper.downloadFileByURL(data['bg'][0])
+        img_front = fileHelper.downloadFileByURL(data['front'][0])
+        gap = fileHelper.identify_gap(img_bg,img_front,'Image/out.png')
+        print('缺口距离为：' + gap)
+        return gap

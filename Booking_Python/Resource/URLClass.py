@@ -5,7 +5,7 @@ class URLClass:
     validatePn = "https://ac.dun.163.com/v2/config/js?pn={0}&cvk=&cb={1}&t={2}"
     validateD = "https://ac.dun.163.com/v3/d"
     validateB = "https://ac.dun.163.com/v3/b"
-    validateRefer = "https://c.dun.163.com/api/v3/get?referer="
+    validateRefer = "https://c.dun.163.com/api/v3/get?"
     validateCheck = "https://c.dun.163.com/api/v3/check?referer="
     loginByAfs = "https://lhqkl.ydmap.cn/v2/pubUser/loginByAfs.do"
     portalLog = "https://lhqkl.ydmap.cn/v2/commonLog/portalLog.do"
@@ -21,3 +21,5 @@ class URLClass:
     extDataList = "https://lhqkl.ydmap.cn/v2/pubStudy/extDataList.do?dataId={0}&relType={1}&_time={2}"
     payMain = "https://lhqkl.ydmap.cn/v2/pay/main.do?dealId={0}&client={1}&_time={2}"
     orderSave = "https://lhqkl.ydmap.cn/srv100455/api/sport/venueOrder/save"
+    referer_login = "https://lhqkl.ydmap.cn/user/login"
+    param_id = '0908c3b5498d40ed8e17328b88a7d6a9'

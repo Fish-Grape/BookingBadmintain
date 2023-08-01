@@ -410,7 +410,7 @@ function h(e, t, n, o) {
     return a;
 }
 
-function myFunction() {
+function Get_signature() {
     var arg1 = {
         _time: Date.now()
     }
@@ -421,8 +421,6 @@ function myFunction() {
     const queryString = h(arg1, arg2, arg3, xssKey, -0);
     console.log(queryString);
 }
-myFunction();
-
 
 // function test(){
 //     var p = {

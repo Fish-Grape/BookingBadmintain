@@ -64967,3 +64967,19 @@
         }
     }
 }]);
+
+(function() {
+    'use strict';
+    var fp_hook = "";
+    Object.defineProperty(window,'gdxidpyhxde',{
+        set:function(val){
+            console.log("fp参数的值为: ", val);
+            debugger;
+            this._value = val;
+            return val;
+        },
+        get:function(){
+            return fp_hook;
+        }
+    });
+})();

@@ -22,10 +22,11 @@ class QueryValidateCode(BaseService):
                 response_ref = self.sendGetRef()
                 if(response_ref['msg'] =='ok'):
                     print('Send refer success!')
-                    data = response_ref['data']
-                    self.paramHelper.getValidate_gap(data)
-    def sendCheck(self):
-        print()
+                    self.sendCheck(response_ref)
+    def sendCheck(self,response_ref):
+        data = response_ref['data']
+        check_param = self.paramHelper.getValidateParam_check(data)
+
 
     def sendGetRef(self):
         header = self.paramHelper.getBaseHeaders();

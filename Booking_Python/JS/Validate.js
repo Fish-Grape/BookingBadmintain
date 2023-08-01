@@ -1834,7 +1834,7 @@ function StartB(configObj){
     var param_d=lb(d);
     var result={
         'd': param_d,
-        'v': Get_v(config.v),
+        'v': Get_v(config.luv),
         'cb': Get_cb()
     }
     console.log(result)
@@ -1862,19 +1862,19 @@ function StartD(configObj){
     console.log(param_d)
     var result={
         'd': param_d,
-        'v': Get_v(config.v),
+        'v': Get_v(config.luv),
         'cb': Get_cb()
     }
     return result;
 }
 
-function Get_callBack(){
-    return '__JSONP_' + ab().slice(2, 9)+'_0';
+function Get_callBack(index){
+    return '__JSONP_' + ab().slice(2, 9)+'_' + index;
 }
 
-function Get_ref_callBack(){
+function Get_ref_callBack(index){
     var middle = Math['random']()['toString'](0x24)['slice'](0x2, 0x9);
-    return '__JSONP_' + middle +'_0';
+    return '__JSONP_' + middle +'_'+ index;
 }
 
 function Get_acToken(WM_DID) {
@@ -1886,6 +1886,7 @@ function Get_acToken(WM_DID) {
         d: q || '', //WM_DID
         b: f
     };
+    a.t = Ub(f);
     try {
         return Na(JSON['stringify'](a))
     } catch (g) {

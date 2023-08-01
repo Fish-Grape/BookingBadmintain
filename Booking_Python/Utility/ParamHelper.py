@@ -3,7 +3,9 @@ import time
 from Model.Enum import QueryType
 import execjs
 from Resource.URLClass import URLClass
+from Utility.CacheClass import CacheClass
 from Utility.FileHelper import FileHelper
+import urllib.parse
 
 class ParamHelper:
     def __init__(self):
@@ -85,8 +87,8 @@ class ParamHelper:
 
     def getJSctx(self,type):
         jsFile = self.getJsFileName(type)
-        with open(jsFile, "rb") as f:
-            js_code = f.read().decode('utf-8')
+        with open(jsFile, "r",encoding='utf-8') as f:
+            js_code = f.read()
         ctx = execjs.compile(js_code)
         return ctx
 
@@ -107,7 +109,7 @@ class ParamHelper:
 
     def getParam_callBack(self):
         ctx = self.getJSctx(QueryType.ValidateCode)
-        callback = ctx.call("Get_callBack")
+        callback = ctx.call("Get_callBack",0)
         return callback
 
     def getValidateParam_ref(self,configObj):
@@ -137,7 +139,7 @@ class ParamHelper:
             'callback': ''
         }
         ctx = self.getJSctx(QueryType.ValidateCode)
-        data['callback'] = ctx.call("Get_ref_callBack")
+        data['callback'] = ctx.call("Get_ref_callBack",CacheClass.cache['index'])
         data['acToken'] = ctx.call("Get_acToken", configObj['WM_DID'])
         ctx = self.getJSctx(QueryType.CoreV2)
         data['cb'] = ctx.call("Get_cb")
@@ -165,7 +167,7 @@ class ParamHelper:
         }
         gap_width = self.getValidate_gap(data)
         ctx = self.getJSctx(QueryType.ValidateCode)
-        param['callback'] = ctx.call("Get_callBack")
+        param['callback'] = ctx.call("Get_ref_callBack",CacheClass.cache['index'])
         param['token'] = data['token']
         ctx = self.getJSctx(QueryType.CoreV2)
         param['cb'] = ctx.call("Get_cb")
@@ -175,7 +177,6 @@ class ParamHelper:
         }
         param['data'] = ctx.call("Get_data",data_param)
         result = '&'.join([f'{key}={value}' for key, value in param.items()])
-        print(result)
         return result
 
     def getValidate_gap(self,data):

@@ -9,6 +9,13 @@ class BookingService:
         fileHelper = FileHelper()
         fileHelper.clearImages()
         switch = QuerySwitch()
-        queryResult = switch.sendQuery(QueryType.ValidateCode)
+        flag = True
+        queryResult = None
+        i = 0
+        while(flag):
+            queryResult = switch.sendQuery(QueryType.ValidateCode)
+            i +=1
+            if(i == 1):
+                flag = False
         return  queryResult
 

@@ -6,7 +6,7 @@ class URLClass:
     validateD = "https://ac.dun.163.com/v3/d"
     validateB = "https://ac.dun.163.com/v3/b"
     validateRefer = "https://c.dun.163.com/api/v3/get?"
-    validateCheck = "https://c.dun.163.com/api/v3/check?referer="
+    validateCheck = "https://c.dun.163.com/api/v3/check?"
     loginByAfs = "https://lhqkl.ydmap.cn/v2/pubUser/loginByAfs.do"
     portalLog = "https://lhqkl.ydmap.cn/v2/commonLog/portalLog.do"
     getSalesItemList = "https://lhqkl.ydmap.cn/srv100455/api/pub/sport/venue/getSalesItemList?salesId=103909&_time="

@@ -1,11 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="JS/CoreV2.js"></script>
+  <title>Mouse Drag Tracking</title>
+  <script src="JS/CoreV2.js"></script>
 </head>
 <body>
+  <canvas id="canvas" width="800" height="600"></canvas>
+  <script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var positions = [];
 
+    // 监听鼠标按下事件
+    canvas.addEventListener('mousedown', function(event) {
+      positions.push({x: event.clientX, y: event.clientY});
+      canvas.addEventListener('mousemove', onMouseMove);
+      canvas.addEventListener('mouseup', onMouseUp);
+    });
+
+    // 监听鼠标移动事件
+    function onMouseMove(event) {
+      positions.push({x: event.clientX, y: event.clientY});
+      draw();
+    }
+
+    // 监听鼠标松开事件
+    function onMouseUp(event) {
+      positions.push({x: event.clientX, y: event.clientY});
+      canvas.removeEventListener('mousemove', onMouseMove);
+      canvas.removeEventListener('mouseup', onMouseUp);
+      // 在这里可以对鼠标拖动轨迹进行后续处理
+    }
+
+    // 绘制鼠标拖动轨迹
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.moveTo(positions[0].x, positions[0].y);
+      for (var i = 1; i < positions.length; i++) {
+        ctx.lineTo(positions[i].x, positions[i].y);
+      }
+      ctx.stroke();
+    }
+  </script>
 </body>
 </html>

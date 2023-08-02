@@ -444,9 +444,9 @@ function _0x46a69f(_0x4bcf2b, _0x5ae99a) {
 
 var sample_arr=[],str_token = '';
 
-function onMouseMove() {
-    var _0x1db195 = 1282 //clientX
-      , _0x5b963d = 5 //clientY
+function onMouseMove(arr) {
+    var _0x1db195 = arr[0] //clientX
+      , _0x5b963d = arr[1] //clientY
       , _0x53c690 = {
         "status": "dragend",
         "beginTime": 0,
@@ -461,16 +461,33 @@ function onMouseMove() {
       , _0x140376 = 'dragend'
       , _0x5e848f = 0 //beginTime
       , _0x2f4e65 = 0;  //startX
-    if (_0x53c690['status'] = _0x5e848f && _0x1db195 - _0x2f4e65 > 0x3 && 'dragend' === _0x140376 ? 'dragstart' : _0x140376,
-    'dragend' !== 'dragend') {
-        Object['assign'](_0x53c690, {
-            'clientX': _0x1db195,
-            'clientY': _0x5b963d,
-            'dragX': _0x1db195 - 0
-        });
-        var _0x5d8a62 = str_token
-          , _0x177420 = _0x46a69f(_0x5d8a62, [Math['round'](_0x53c690['dragX'] < 0x0 ? 0x0 : _0x53c690['dragX']), Math['round'](_0x53c690['clientY'] - _0x53c690['startY']), Date.now() - _0x53c690['beginTime']] + '');
-          sample_arr['push'](_0x177420)
+
+    Object['assign'](_0x53c690, {
+        'clientX': _0x1db195,
+        'clientY': _0x5b963d,
+        'dragX': _0x1db195 - 0
+    });
+    var _0x5d8a62 = str_token
+      , _0x177420 = _0x46a69f(_0x5d8a62, [Math['round'](_0x53c690['dragX'] < 0x0 ? 0x0 : _0x53c690['dragX']), Math['round'](_0x53c690['clientY'] - _0x53c690['startY']), Date.now() - _0x53c690['beginTime']] + '');
+      sample_arr['push'](_0x177420)
+
+    // if (_0x53c690['status'] = _0x5e848f && _0x1db195 - _0x2f4e65 > 0x3 && 'dragend' === _0x140376 ? 'dragstart' : _0x140376,
+    // 'dragend' !== 'dragend') {
+    //     Object['assign'](_0x53c690, {
+    //         'clientX': _0x1db195,
+    //         'clientY': _0x5b963d,
+    //         'dragX': _0x1db195 - 0
+    //     });
+    //     var _0x5d8a62 = str_token
+    //       , _0x177420 = _0x46a69f(_0x5d8a62, [Math['round'](_0x53c690['dragX'] < 0x0 ? 0x0 : _0x53c690['dragX']), Math['round'](_0x53c690['clientY'] - _0x53c690['startY']), Date.now() - _0x53c690['beginTime']] + '');
+    //       sample_arr['push'](_0x177420)
+    // }
+}
+
+function getSlideArray(dataArr){
+    debugger
+    for(let arr in dataArr){
+        onMouseMove(arr);
     }
 }
 

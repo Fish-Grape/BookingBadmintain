@@ -140,10 +140,10 @@ class ParamHelper:
         }
         ctx = self.getJSctx(QueryType.ValidateCode)
         data['callback'] = ctx.call("Get_ref_callBack",CacheClass.cache['index'])
-        data['acToken'] = ctx.call("Get_acToken", configObj['WM_DID'])
+        data['acToken'] = ctx.call("Get_acToken", configObj['WM_DID'],False)
         ctx = self.getJSctx(QueryType.CoreV2)
         data['cb'] = ctx.call("Get_cb")
-        data['fp'] = ctx.call("Get_fp")
+        # data['fp'] = ctx.call("Get_fp")
         result = '&'.join([f'{key}={value}' for key, value in data.items()])
         return result
 
@@ -184,5 +184,5 @@ class ParamHelper:
         img_bg = fileHelper.downloadFileByURL(data['bg'][0])
         img_front = fileHelper.downloadFileByURL(data['front'][0])
         gap = fileHelper.identify_gap(img_bg,img_front,'Image/out.png')
-        print('缺口距离为：' + gap)
-        return gap
+        print('缺口距离为：' + str(gap))
+        return gap * 2

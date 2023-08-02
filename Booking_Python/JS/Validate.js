@@ -1877,7 +1877,7 @@ function Get_ref_callBack(index){
     return '__JSONP_' + middle +'_'+ index;
 }
 
-function Get_acToken(WM_DID) {
+function Get_acToken(WM_DID,e) {
     var f = bc()
       , q = WM_DID  //WM_DID
       , l = 1;
@@ -1886,7 +1886,8 @@ function Get_acToken(WM_DID) {
         d: q || '', //WM_DID
         b: f
     };
-    a.t = Ub(f);
+    e && (f = hb(ac($b(unescape(encodeURIComponent(l + q + f + 'WoeTpXnDDPhiAvsJUUIY3RdAo2PKaVwi'))))),
+                    a.t = Ub(f));
     try {
         return Na(JSON['stringify'](a))
     } catch (g) {

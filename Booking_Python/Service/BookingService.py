@@ -1,13 +1,16 @@
 from Model.Enum import QueryType
 from Service.QueryService.QuerySwitch import QuerySwitch
+from Utility.CacheClass import CacheClass
 from Utility.FileHelper import FileHelper
 
 
 class BookingService:
 
     def Main(self):
+        cacheClass = CacheClass()
+        cacheClass.initCache()
         fileHelper = FileHelper()
-        fileHelper.clearImages()
+        # fileHelper.clearImages()
         switch = QuerySwitch()
         flag = True
         queryResult = None

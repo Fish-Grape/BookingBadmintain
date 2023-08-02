@@ -3,28 +3,33 @@ from Service.QueryService.BaseService import BaseService
 import requests
 from Resource.URLClass import URLClass
 import json
-
 from Utility.CacheClass import CacheClass
+from Utility.FileHelper import FileHelper
 
 
 class QueryValidateCode(BaseService):
     configObj_D = None
+    cacheClass = CacheClass()
 
     def doQuery(self):
-        # fileHelper = FileHelper()
-        # fileHelper.identify_gap('Image/74053a4d879b40c487a0534b655ae2c2.jpg','Image/7af21e51acf94e779606d2f43935ff57.png','Image/out.png')
-        if (CacheClass.cache['response_config'] != None):
-            self.configObj_D = CacheClass.cache['response_config']
-        response_d = self.sendD()
-        if(response_d[0] == 200):
-            print('Send d success!')
-            response_b = self.sendB(response_d)
-            if(response_b[0] == 200):
-                print('Send b success!')
-                response_ref = self.sendGetRef()
-                if(response_ref['msg'] =='ok'):
-                    print('Send refer success!')
-                    self.sendCheck(response_ref)
+        fileHelper = FileHelper()
+        gap_width = fileHelper.identify_gap('Image/950b870f91624d468f657ecde6952ab3.jpg','Image/1cbdbe9f8fc34445b5474eff83141a14.png','Image/out.png')
+        print('gap_width:' + str(gap_width))
+        slide = fileHelper.get_slide_track(gap_width)
+        print(slide)
+
+        # CacheClass.cache = self.cacheClass.readCache()
+        # response_d = self.sendD()
+        # if(response_d[0] == 200):
+        #     print('Send d success!')
+        #     response_b = self.sendB(response_d)
+        #     if(response_b[0] == 200):
+        #         print('Send b success!')
+        #         response_ref = self.sendGetRef()
+        #         if(response_ref['msg'] =='ok'):
+        #             print('Send refer success!')
+                #     self.sendCheck(response_ref)
+
     def sendCheck(self,response_ref):
         header = self.paramHelper.getBaseHeaders();
         data = response_ref['data']
@@ -41,6 +46,7 @@ class QueryValidateCode(BaseService):
         index=CacheClass.cache['index']
         index +=1
         CacheClass.cache['index'] = index
+        self.cacheClass.updateCache(CacheClass.cache)
 
     def sendGetRef(self):
         header = self.paramHelper.getBaseHeaders();
@@ -66,6 +72,7 @@ class QueryValidateCode(BaseService):
 
     def sendD(self):
         if(CacheClass.cache['response_d'] != None):
+            self.configObj_D = CacheClass.cache['configObj_D']
             return CacheClass.cache['response_d']
         header = self.paramHelper.getBaseHeaders();
         configResponse = self.getConfig()
@@ -76,7 +83,10 @@ class QueryValidateCode(BaseService):
         response = requests.post(URLClass.validateD, headers=header,data = param_d)
         responseDic = self.getResponse(response.text, IndexType.NormalBrackets)
         arr = json.loads(responseDic.replace('(', '').replace(')', ''))
+
         CacheClass.cache['response_d'] = arr
+        CacheClass.cache['configObj_D'] = self.configObj_D
+        self.cacheClass.updateCache(CacheClass.cache)
         return arr
 
     # // WM_NIKE = getconf_response.data.ac.token
@@ -87,8 +97,6 @@ class QueryValidateCode(BaseService):
     # // WM_DID = d_response[3]  + __1690004272469__1689932272469
     # // WM_NI =  d_response[5]
     def convetToConfigObj(self,config,pn):
-        if (CacheClass.cache['response_config'] != None):
-            return CacheClass.cache['response_config']
         obj = {
             'bid':config['data']['ac']['bid'],
             'pn':config['data']['ac']['pn'],
@@ -98,7 +106,6 @@ class QueryValidateCode(BaseService):
             'luv': pn['result']['luv'],
             'WM_NI':''
         }
-        CacheClass.cache['response_config'] = obj
         return  obj
 
     def getConfig(self):
@@ -121,6 +128,7 @@ class QueryValidateCode(BaseService):
         response = requests.get(urlFormat, headers=header)
         responseDic = self.getResponse(response.text)
         CacheClass.cache['response_pn'] = responseDic
+        self.cacheClass.updateCache(CacheClass.cache)
         return responseDic
 
     def getResponse(self,json_str,index = IndexType.CurlyBrackets):

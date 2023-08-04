@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import datetime, date
 
 class CacheClass:
     cache = {
@@ -10,12 +11,22 @@ class CacheClass:
     }
     filePath = 'Cache/CacheFile.json'
 
-    def clearCache(self):
-        if os.path.exists(self.filePath):
-            os.remove(self.filePath)
-            print('缓存已删除')
+    def clearCacheBeforeToday(self):
+        # 指定目录路径和删除文件的最早日期
+        dir_path = 'Cache/'
+        earliest_date = datetime.now().date()
+
+        # 遍历目录中的所有文件
+        for filename in os.listdir(dir_path):
+            file_path = os.path.join(dir_path, filename)
+            # 检查文件修改时间是否早于最早日期
+            if os.path.isfile(file_path) and os.path.getmtime(file_path) < datetime.combine(earliest_date,datetime.min.time()).timestamp():
+                # 删除文件
+                os.remove(file_path)
+                print('缓存已删除')
 
     def initCache(self):
+        self.clearCacheBeforeToday()
         if os.path.exists(self.filePath):
             print('缓存已存在')
         else:

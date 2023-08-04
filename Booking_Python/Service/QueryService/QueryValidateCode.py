@@ -12,23 +12,23 @@ class QueryValidateCode(BaseService):
     cacheClass = CacheClass()
 
     def doQuery(self):
-        fileHelper = FileHelper()
-        gap_width = fileHelper.identify_gap('Image/950b870f91624d468f657ecde6952ab3.jpg','Image/1cbdbe9f8fc34445b5474eff83141a14.png','Image/out.png')
-        print('gap_width:' + str(gap_width))
-        slide = fileHelper.get_slide_track(gap_width)
-        print(slide)
+        # fileHelper = FileHelper()
+        # gap_width = 2 * fileHelper.identify_gap('Image/07c794ee035a4eb9b8a2933bacb730bd.jpg','Image/db01f13d3c4b454d85773cd8cd47125d.png','Image/out.png')
+        # print('gap_width:' + str(gap_width))
+        # slide = fileHelper.get_slide_track(gap_width)
+        # print(slide)
 
-        # CacheClass.cache = self.cacheClass.readCache()
-        # response_d = self.sendD()
-        # if(response_d[0] == 200):
-        #     print('Send d success!')
-        #     response_b = self.sendB(response_d)
-        #     if(response_b[0] == 200):
-        #         print('Send b success!')
-        #         response_ref = self.sendGetRef()
-        #         if(response_ref['msg'] =='ok'):
-        #             print('Send refer success!')
-                #     self.sendCheck(response_ref)
+        CacheClass.cache = self.cacheClass.readCache()
+        response_d = self.sendD()
+        if(response_d[0] == 200):
+            print('Send d success!')
+            response_b = self.sendB(response_d)
+            if(response_b[0] == 200):
+                print('Send b success!')
+                response_ref = self.sendGetRef()
+                if(response_ref['msg'] =='ok'):
+                    print('Send refer success!')
+                    self.sendCheck(response_ref)
 
     def sendCheck(self,response_ref):
         header = self.paramHelper.getBaseHeaders();
@@ -64,7 +64,7 @@ class QueryValidateCode(BaseService):
         self.configObj_D['WM_NI'] = response_d[5]
         param_b = self.paramHelper.getValidateParam_b(self.configObj_D)
         header = self.paramHelper.getBaseHeaders();
-        print('param_b:' + str(param_b))
+        # print('param_b:' + str(param_b))
         response = requests.post(URLClass.validateB, headers=header, data=param_b)
         responseDic = self.getResponse(response.text, IndexType.NormalBrackets)
         arr = json.loads(responseDic.replace('(', '').replace(')', ''))

@@ -64976,6 +64976,7 @@
             console.log("fp参数的值为: ", val);
             debugger;
             this._value = val;
+            fp_hook = val;
             return val;
         },
         get:function(){

@@ -2,6 +2,7 @@ import requests
 import os
 import cv2
 import random
+import time
 
 class FileHelper:
 
@@ -66,32 +67,73 @@ class FileHelper:
  
         if not isinstance(distance, int) or distance < 0:
             raise ValueError(f"distance类型必须是大于等于0的整数: distance: {distance}, type: {type(distance)}")
+
+        # 初始化滑动时间
+        t = random.randint(95, 98)
+        init_x = 664 + random.choice([-1,1,2,3])
+        init_y = 595 + random.choice([-1,1,2,3])
+        total_distance = distance + init_x + 1
         # 初始化轨迹列表
         slide_track = [
-            [random.randint(-50, -10), random.randint(-50, -10), 0],
-            [0, 0, 0],
+            [init_x, init_y, t],
         ]
         # 共记录count次滑块位置信息
-        count = 30 + int(distance / 2)
-        # 初始化滑动时间
-        t = random.randint(50, 100)
+        flag = True
         # 记录上一次滑动的距离
-        _x = 0
-        _y = 0
-        for i in range(count):
+        _x = init_x
+        _y = init_y
+        probability = 0
+        slide = 0
+        while flag:
+            if(_x >= total_distance):
+                flag = False
+                break
             # 已滑动的横向距离
-            x = round(self.__ease_out_expo(i / count) * distance)
+            x = _x + self.set_x(probability)
+            slide +=  x -_x
+            probability = slide / distance
+            # 已滑动的纵向距离
+            y = self.set_y(probability)
             # 滑动过程消耗的时间
-            t += random.randint(10, 20)
             if x == _x:
                 continue
-            slide_track.append([x, _y, t])
+            t += self.set_t(probability)
+            slide_track.append([x, _y + y, t])
             _x = x
-        slide_track.append(slide_track[-1])
         return slide_track #, slide_track[-1][2]   # 大数组，滑动时间
 
-    def __ease_out_expo(self,sep):
-        if sep == 1:
-            return 1
+    def set_y(self,pro):
+        if pro <=0.7:
+            return -2
         else:
-            return 1 - pow(2, -10 * sep)
+            return -5
+
+    def set_x(self,pro):
+        if pro <= 0.18:
+            return random.choice([9, 11, 11, 15, 16, 19, 20, 19, 19, 16, 20, 16, 13, 12, 12])
+        elif pro <= 0.72:
+            return random.choice([9, 11, 11, 15, 16, 19, 20, 19, 19, 16, 20, 16, 13, 12, 12, 6, 6, 5, 6, 5, 5, 6, 4, 4, 4, 4, 6, 3, 5, 5, 8, 8, 9, 9, 8, 5, 6, 5, 4, 4, 4])
+        else:
+            return random.choice([1, 1, 1, 1, 2, 1, 1, 1, 2, 3, 2, 2, 1, 1, 1, 1, 2, 3, 1, 1, 2, 1, 1, 1, 1, 2, 3, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2])
+
+    def set_t(self,pro):
+        if pro <= 0.7:
+            return self.generate_t_pre()
+        elif pro <= 0.75:
+            return random.choice([77, 185, 15, 120, 15, 16, 8, 17, 23, 24])
+        elif pro <= 0.84:
+            return self.generate_t_pre()
+        else:
+            return random.choice([68, 15, 8, 40, 56, 8, 8, 8, 16, 8, 18, 24, 34, 49, 39, 8, 57, 24])
+
+    def generate_t_pre(self):
+        num = 0
+        arr = [6, 7, 9, 10]
+        random_num = random.randint(0, 99)
+        if random_num < 77:
+            num = 8
+        else:
+            num = random.choice(arr)
+        return num
+
+

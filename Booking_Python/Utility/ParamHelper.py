@@ -114,7 +114,7 @@ class ParamHelper:
 
     def getValidateParam_ref(self,configObj):
         data = {
-            'referer': URLClass.referer_login,
+            'referer': urllib.parse.quote(URLClass.referer_login),
             'zoneId': 'CN31',
             'acToken': '',
             'id': URLClass.param_id,
@@ -142,14 +142,14 @@ class ParamHelper:
         data['callback'] = ctx.call("Get_ref_callBack",CacheClass.cache['index'])
         data['acToken'] = ctx.call("Get_acToken", configObj['WM_DID'],False)
         ctx = self.getJSctx(QueryType.CoreV2)
-        data['cb'] = ctx.call("Get_cb")
-        # data['fp'] = ctx.call("Get_fp")
+        data['cb'] = urllib.parse.quote(ctx.call("Get_cb"))
+        data['fp'] =urllib.parse.quote(ctx.call("Get_fp"))
         result = '&'.join([f'{key}={value}' for key, value in data.items()])
         return result
 
     def getValidateParam_check(self,data):
         param = {
-            'referer': URLClass.referer_login,
+            'referer': urllib.parse.quote(URLClass.referer_login),
             'zoneId': 'CN31',
             'id': URLClass.param_id,
             'token': '',
@@ -165,17 +165,18 @@ class ParamHelper:
             'sdkVersion': 'undefined',
             'callback': ''
         }
-        gap_width = self.getValidate_gap(data)
+        gap_data = self.getValidate_gap(data)
         ctx = self.getJSctx(QueryType.ValidateCode)
         param['callback'] = ctx.call("Get_ref_callBack",CacheClass.cache['index'])
         param['token'] = data['token']
         ctx = self.getJSctx(QueryType.CoreV2)
-        param['cb'] = ctx.call("Get_cb")
+        param['cb'] = urllib.parse.quote(ctx.call("Get_cb"))
         data_param = {
             'token':data['token'],
-            'width':gap_width
+            'width':gap_data[0],
+            'slideArr':gap_data[1],
         }
-        param['data'] = ctx.call("Get_data",data_param)
+        param['data'] = urllib.parse.quote(ctx.call("Get_data",data_param))
         result = '&'.join([f'{key}={value}' for key, value in param.items()])
         return result
 
@@ -183,6 +184,8 @@ class ParamHelper:
         fileHelper = FileHelper()
         img_bg = fileHelper.downloadFileByURL(data['bg'][0])
         img_front = fileHelper.downloadFileByURL(data['front'][0])
-        gap = fileHelper.identify_gap(img_bg,img_front,'Image/out.png')
+        gap = fileHelper.identify_gap(img_bg,img_front,'Image/out.png') * 2
         print('缺口距离为：' + str(gap))
-        return gap * 2
+        slideArr = fileHelper.get_slide_track(gap)
+        print('轨迹数组：' + str(slideArr))
+        return gap,slideArr

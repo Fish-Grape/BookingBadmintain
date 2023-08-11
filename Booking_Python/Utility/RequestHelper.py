@@ -22,10 +22,10 @@ class RequestHelper:
         return ResponseDic
 
 
-    def getSingatureWithArg(self):
+    def getSingatureWithArg(self,url):
         now = self.paramHelper.getTimeSpan()
         serverTime = self.getServerTime()
         duration = now - serverTime
         print('Duration:' + str(duration))
-        paramResult = self.paramHelper.getSingatureWithArg(now, duration)
+        paramResult = self.paramHelper.getSingatureWithArg(url, duration)
         return paramResult

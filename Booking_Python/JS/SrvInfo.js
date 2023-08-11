@@ -1,9 +1,4 @@
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-
-const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-const window = dom.window;
-
+var symbol='Symbol(Symbol.toStringTag)'
 
 // const n = {
 //     o: (e, t) => Object.prototype.hasOwnProperty.call(e, t),
@@ -77,7 +72,7 @@ function sp(e1) {
     }
 
     var i = function (e) {
-        const c=window.Symbol.toStringTag;
+        const c= symbol;
         var t = r.call(e, c)
             , n = e[c];
         try {
@@ -90,13 +85,13 @@ function sp(e1) {
     }
 
     function o(e) {
-        var o1 = window.Symbol,
+        var o1 = symbol,
             r1 = function (e) {
                 return null != e && "object" == typeof e
             },
             a1 = "[object Null]",
             c1 = "[object Undefined]",
-            p1 = o1 ? o1.toStringTag : void 0;
+            p1 = o1;
             if (null == e) {
                 if (void 0 === e) {
                   return c1;
@@ -420,6 +415,7 @@ function Get_signature() {
     var xssKey = xn.join("");
     const queryString = h(arg1, arg2, arg3, xssKey, -0);
     console.log(queryString);
+    return queryString;
 }
 
 // function test(){

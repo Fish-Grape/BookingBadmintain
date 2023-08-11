@@ -2,6 +2,9 @@ import requests
 import os
 import cv2
 import random
+import numpy as np  # numpy 数学函数库
+import pandas as pd  # pandas 数据分析库
+import math
 import time
 
 class FileHelper:
@@ -93,7 +96,7 @@ class FileHelper:
             slide +=  x -_x
             probability = slide / distance
             # 已滑动的纵向距离
-            y = self.set_y(probability)
+            y = random.uniform(-2, 2)
             # 滑动过程消耗的时间
             if x == _x:
                 continue
@@ -102,22 +105,16 @@ class FileHelper:
             _x = x
         return slide_track #, slide_track[-1][2]   # 大数组，滑动时间
 
-    def set_y(self,pro):
-        if pro <=0.7:
-            return -2
-        else:
-            return -5
-
     def set_x(self,pro):
         if pro <= 0.18:
             return random.choice([9, 11, 11, 15, 16, 19, 20, 19, 19, 16, 20, 16, 13, 12, 12])
-        elif pro <= 0.72:
-            return random.choice([9, 11, 11, 15, 16, 19, 20, 19, 19, 16, 20, 16, 13, 12, 12, 6, 6, 5, 6, 5, 5, 6, 4, 4, 4, 4, 6, 3, 5, 5, 8, 8, 9, 9, 8, 5, 6, 5, 4, 4, 4])
+        elif pro <= 0.9:
+            return random.choice([9, 11, 11, 15, 16, 19, 20, 19, 19, 16, 20, 16, 13, 12, 12])
         else:
-            return random.choice([1, 1, 1, 1, 2, 1, 1, 1, 2, 3, 2, 2, 1, 1, 1, 1, 2, 3, 1, 1, 2, 1, 1, 1, 1, 2, 3, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2])
+            return random.choice([1, 1, 1, 1, 2, 1, 1, 1, 2, 3, 2, 2, 1, 1, 1, 1, 2])
 
     def set_t(self,pro):
-        if pro <= 0.7:
+        if pro <= 0.5:
             return self.generate_t_pre()
         elif pro <= 0.75:
             return random.choice([77, 185, 15, 120, 15, 16, 8, 17, 23, 24])

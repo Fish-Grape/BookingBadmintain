@@ -7,9 +7,10 @@ import json
 class QuerySalesItemList(BaseService):
     def doQuery(self):
         now = self.paramHelper.getTimeSpan()
-        paramResult = self.requestHelper.getSingatureWithArg()
+        url = URLClass.getSalesItemList + str(now)
+        paramResult = self.requestHelper.getSingatureWithArg(url)
         header = self.paramHelper.getHeaders(paramResult["signature"], str(paramResult["_time"]), paramResult["nonce"]);
-        response = requests.get(URLClass.getSalesItemList + str(now), headers=header)
+        response = requests.get(url, headers=header)
         print(response.text)
         ResponseDic = json.loads(response.text)
         if (ResponseDic['code'] == 0):

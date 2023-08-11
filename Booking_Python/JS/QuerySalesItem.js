@@ -199,10 +199,10 @@ function GetSignature(e, t, n, o) {
         return result
 }
 
-function Start(now,duration) {
+function Start(url,duration) {
     const xn = "D_c_V_o_a_e_C_x_E_7_S_s_9_p_w_X_Z_G_l_H_w_t_C_y_p_7_S_F_2_l_G_K".split("_");
     var xssKey = xn.join("");
-    var e='/srv100455/api/pub/sport/venue/getSalesItemList?salesId=103909&_time=' + now
+    var e = url
     ,t=undefined
     ,n='get'
     ,o=xssKey

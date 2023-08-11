@@ -4,20 +4,12 @@ import requests
 from Resource.URLClass import URLClass
 import json
 from Utility.CacheClass import CacheClass
-from Utility.FileHelper import FileHelper
-
 
 class QueryValidateCode(BaseService):
     configObj_D = None
     cacheClass = CacheClass()
 
     def doQuery(self):
-        # fileHelper = FileHelper()
-        # gap_width = 2 * fileHelper.identify_gap('Image/07c794ee035a4eb9b8a2933bacb730bd.jpg','Image/db01f13d3c4b454d85773cd8cd47125d.png','Image/out.png')
-        # print('gap_width:' + str(gap_width))
-        # slide = fileHelper.get_slide_track(gap_width)
-        # print(slide)
-
         CacheClass.cache = self.cacheClass.readCache()
         response_d = self.sendD()
         if(response_d[0] == 200):
@@ -28,19 +20,22 @@ class QueryValidateCode(BaseService):
                 response_ref = self.sendGetRef()
                 if(response_ref['msg'] =='ok'):
                     print('Send refer success!')
-                    self.sendCheck(response_ref)
+                    response_check = self.sendCheck(response_ref)
+                    if response_check['data']['result'] == True:
+                        print('Send check success!')
+                        CacheClass.cache['response_check'] = response_check
+                        self.cacheClass.updateCache(CacheClass.cache)
+                        return response_check
 
     def sendCheck(self,response_ref):
         header = self.paramHelper.getBaseHeaders();
         data = response_ref['data']
         param = self.paramHelper.getValidateParam_check(data)
         urlFormat = URLClass.validateCheck + param
-        print('url:'+urlFormat)
         response = requests.get(urlFormat, headers=header)
-        print(response.text)
         self.addCBIndex()
-        # responseDic = self.getResponse(response.text)
-        # return responseDic
+        responseDic = self.getResponse(response.text)
+        return responseDic
 
     def addCBIndex(self):
         index=CacheClass.cache['index']
@@ -52,7 +47,6 @@ class QueryValidateCode(BaseService):
         header = self.paramHelper.getBaseHeaders();
         param = self.paramHelper.getValidateParam_ref(self.configObj_D)
         urlFormat = URLClass.validateRefer + param
-        print('url:'+urlFormat)
         response = requests.get(urlFormat, headers=header)
         responseDic = self.getResponse(response.text)
         self.addCBIndex()

@@ -7,6 +7,7 @@ class CacheClass:
         "response_d": None,
         "configObj_D": None,
         "response_pn": None,
+        "response_check": None,
         "index": 0
     }
     filePath = 'Cache/CacheFile.json'

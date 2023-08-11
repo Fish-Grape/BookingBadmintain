@@ -38,9 +38,9 @@ class ParamHelper:
         result = ctx.call("Get_signature")
         return self.handleParam(result)
 
-    def getSingatureWithArg(self,now,duration):
+    def getSingatureWithArg(self,url,duration):
         ctx = self.getJSctx(QueryType.SalesItemList)
-        result = ctx.call("Start", now, duration)
+        result = ctx.call("Start", url, duration)
         return self.handleParam(result)
 
 

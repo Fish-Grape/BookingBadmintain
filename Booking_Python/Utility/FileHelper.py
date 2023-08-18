@@ -73,9 +73,9 @@ class FileHelper:
 
         # 初始化滑动时间
         t = random.randint(95, 98)
-        init_x = 664 + random.choice([-1,1,2,3])
-        init_y = 595 + random.choice([-1,1,2,3])
-        total_distance = distance + init_x + 1
+        init_x = 650 + random.randint(-10,10)
+        init_y = 605 + random.randint(-15,15)
+        total_distance = distance + init_x + random.choice([-2, 1, 2])
         # 初始化轨迹列表
         slide_track = [
             [init_x, init_y, t],
@@ -87,16 +87,20 @@ class FileHelper:
         _y = init_y
         probability = 0
         slide = 0
+        slide_x = 0
         while flag:
-            if(_x >= total_distance):
+            if _x == total_distance:
                 flag = False
                 break
             # 已滑动的横向距离
-            x = _x + self.set_x(probability)
-            slide +=  x -_x
+            slide_x = self.set_x(probability,distance,slide_x)
+            if _x > total_distance:
+                slide_x = -slide_x
+            x = _x + slide_x
+            slide += slide_x
             probability = slide / distance
             # 已滑动的纵向距离
-            y = random.uniform(-2, 2)
+            y = self.set_y()
             # 滑动过程消耗的时间
             if x == _x:
                 continue
@@ -105,27 +109,69 @@ class FileHelper:
             _x = x
         return slide_track #, slide_track[-1][2]   # 大数组，滑动时间
 
-    def set_x(self,pro):
-        if pro <= 0.18:
-            return random.choice([9, 11, 11, 15, 16, 19, 20, 19, 19, 16, 20, 16, 13, 12, 12])
-        elif pro <= 0.9:
-            return random.choice([9, 11, 11, 15, 16, 19, 20, 19, 19, 16, 20, 16, 13, 12, 12])
-        else:
-            return random.choice([1, 1, 1, 1, 2, 1, 1, 1, 2, 3, 2, 2, 1, 1, 1, 1, 2])
+    def set_y(self):
+        return random.choice([0, 0, 0, 0, 0, 0, 0, 0, 1, -1, 2])
 
+    def set_x(self,pro,distance,slide_x):
+        if distance < 210:
+            if pro <= 0.55:
+                if slide_x > 0:
+                    x = self.getStep(slide_x,3,10)
+                    return x
+                x = random.choice([8, 8, 9, 9, 10, 8, 8, 7, 7, 8, 6, 6])
+                return x
+            else:
+                # if slide_x > 3:
+                #     x = slide_x + random.randint(-2, -1)
+                #     return x
+                return random.choice([3,3,3,2,1,1,1,1,2,3,2,3,2,3,2,2,1,2,2,1,1,2,1,1,1,1,1,1,1,1,2,1,2,1,2,1,1,1,2,0,1,1,2,1,2,1,1,1,1,2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+        else:
+            if pro <= 0.58:
+                if slide_x > 0:
+                    x = self.getStep(slide_x,6,12)
+                    return x
+                x = random.choice([10,9,8,7])
+                return x
+            elif pro <= 0.86:
+                if slide_x > 4:
+                    x = slide_x + random.randint(-2, -1)
+                else:
+                    x = self.getStep(slide_x, 1, 4)
+                return x
+            else:
+                if slide_x > 3:
+                    x = slide_x + random.randint(-2, -1)
+                    return x
+                return random.choice([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,3,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0])
+
+    def getStep(self,slide_x,min,max):
+        step = slide_x + random.randint(-2, 2)
+        flag = True
+        while flag:
+            if step<=max and step >=min:
+                flag = False
+            else:
+                step = slide_x + random.randint(-2, 2)
+        return step
+
+
+    isFirst = True
     def set_t(self,pro):
-        if pro <= 0.5:
-            return self.generate_t_pre()
-        elif pro <= 0.75:
-            return random.choice([77, 185, 15, 120, 15, 16, 8, 17, 23, 24])
-        elif pro <= 0.84:
+        if pro <= 0.87:
             return self.generate_t_pre()
         else:
-            return random.choice([68, 15, 8, 40, 56, 8, 8, 8, 16, 8, 18, 24, 34, 49, 39, 8, 57, 24])
+            if self.isFirst:
+                self.isFirst = False
+                return random.randint(113,280)
+            temp_pro = round(pro,2)
+            # if temp_pro == 0.92 or temp_pro == 0.98:
+            #     self.isFirst = True
+            return random.choice([15,16,8,16,8,8,7,17,24,8,15,16,73,8,81,15,24,7,25,32,64,16,8,16,15,16,7,8,8,8,8,8,6,8,9,8,16,81,7,24,32,16,16,32,24,24,8,23])
+
 
     def generate_t_pre(self):
         num = 0
-        arr = [6, 7, 9, 10]
+        arr = [7, 9]
         random_num = random.randint(0, 99)
         if random_num < 77:
             num = 8

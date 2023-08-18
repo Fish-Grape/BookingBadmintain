@@ -1,3 +1,5 @@
+import time
+
 from Model.Enum import IndexType
 from Service.QueryService.BaseService import BaseService
 import requests
@@ -11,24 +13,38 @@ class QueryValidateCode(BaseService):
 
     def doQuery(self):
         CacheClass.cache = self.cacheClass.readCache()
+        retry_result = self.tryValidate()
+        if retry_result == False:
+            for i in range(1, 2):
+                time.sleep(1)
+                retry_result = self.tryValidate()
+                if retry_result:
+                    return retry_result
+            self.cacheClass.clearCache()
+
+    def tryValidate(self):
         response_d = self.sendD()
-        if(response_d[0] == 200):
+        if (response_d[0] == 200):
             print('Send d success!')
             response_b = self.sendB(response_d)
-            if(response_b[0] == 200):
+            if (response_b[0] == 200):
                 print('Send b success!')
                 response_ref = self.sendGetRef()
-                if(response_ref['msg'] =='ok'):
+                if (response_ref['msg'] == 'ok'):
                     print('Send refer success!')
+                    time.sleep(1)
                     response_check = self.sendCheck(response_ref)
-                    if response_check['data']['result'] == True:
+                    if response_check['data'] != None and response_check['data']['result'] == True:
                         print('Send check success!')
-                        CacheClass.cache['response_check'] = response_check
+                        self.cacheClass.clearValidate()
+                        CacheClass.cache['validate'] = response_check['data']['validate']
                         self.cacheClass.updateCache(CacheClass.cache)
-                        return response_check
+                        return True
+                    else:
+                        return False
 
     def sendCheck(self,response_ref):
-        header = self.paramHelper.getBaseHeaders();
+        header = self.paramHelper.getBaseHeaders()
         data = response_ref['data']
         param = self.paramHelper.getValidateParam_check(data)
         urlFormat = URLClass.validateCheck + param
@@ -44,7 +60,7 @@ class QueryValidateCode(BaseService):
         self.cacheClass.updateCache(CacheClass.cache)
 
     def sendGetRef(self):
-        header = self.paramHelper.getBaseHeaders();
+        header = self.paramHelper.getBaseHeaders()
         param = self.paramHelper.getValidateParam_ref(self.configObj_D)
         urlFormat = URLClass.validateRefer + param
         response = requests.get(urlFormat, headers=header)

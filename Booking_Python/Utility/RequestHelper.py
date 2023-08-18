@@ -7,8 +7,8 @@ class RequestHelper:
     paramHelper = ParamHelper()
 
     def getServerTime(self):
-        paramResult = self.paramHelper.getSingature();
-        header = self.paramHelper.getHeaders(paramResult["signature"], paramResult["_time"], paramResult["nonce"]);
+        paramResult = self.paramHelper.getSingature(self.paramHelper.getTimeSpan(),0)
+        header = self.paramHelper.getHeaders(paramResult["signature"], paramResult["_time"], paramResult["nonce"])
         response = requests.get(URLClass.querySrvInfo + str(paramResult["_time"]), headers=header)
         print(response.text)
         ResponseDic = json.loads(response.text)
@@ -21,11 +21,13 @@ class RequestHelper:
             print(str.format("QuerySrvInfo fail! msg:{0}", ResponseDic['msg']))
         return ResponseDic
 
+    def getDurationTime(self):
+        serverTime = self.getServerTime()
+        now = self.paramHelper.getTimeSpan()
+        duration = now - serverTime
+        return -duration
 
     def getSingatureWithArg(self,url):
-        now = self.paramHelper.getTimeSpan()
-        serverTime = self.getServerTime()
-        duration = now - serverTime
-        print('Duration:' + str(duration))
+        duration = self.getDurationTime()
         paramResult = self.paramHelper.getSingatureWithArg(url, duration)
         return paramResult

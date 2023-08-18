@@ -7,23 +7,37 @@ from Utility.CacheClass import CacheClass
 
 class LoginService(BaseService):
     cacheClass = CacheClass()
+    mobile = '18672905502'
+    pwd = 'OR123456'
+    validate = None
 
     def doQuery(self):
         CacheClass.cache = self.cacheClass.readCache()
-        response_d = self.sendD()
-        if(response_d[0] == 200):
-            print('Send d success!')
-            response_b = self.sendB(response_d)
-            if(response_b[0] == 200):
-                print('Send b success!')
-                response_ref = self.sendGetRef()
-                if(response_ref['msg'] =='ok'):
-                    print('Send refer success!')
-                    response_check = self.sendCheck(response_ref)
-                    if response_check['data']['result'] == True:
-                        print('Send check success!')
-                        CacheClass.cache['response_check'] = response_check
-                        self.cacheClass.updateCache(CacheClass.cache)
-                        return response_check
+        if CacheClass.cache['validate'] is None:
+            print('No validate cache!')
+            return None
+
+        duration = CacheClass.cache['duration']
+        if duration is None:
+            duration = self.requestHelper.getDurationTime()
+        loginWithMobile = {
+            'mobile':self.mobile,
+            'pwd': self.pwd,
+            'validate': CacheClass.cache['validate'],
+        }
+        paramResult = self.paramHelper.getLoginSingature(loginWithMobile, duration)
+        paramSignature = paramResult[0]
+        header = self.paramHelper.getHeaders(paramSignature["signature"], paramSignature["_time"], paramSignature["nonce"])
+        header['Content-Type'] = 'application/json'
+        paramBody = {
+            'loginType':0,
+            'loginWithMobile': paramResult[1]
+        }
+        json_data = json.dumps(paramBody)
+        print(duration)
+        print(header)
+        print(URLClass.loginByAfs)
+        response = requests.post(URLClass.loginByAfs, headers=header, data=json_data)
+        print(response.text)
 
 

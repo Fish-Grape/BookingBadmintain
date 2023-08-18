@@ -7,8 +7,10 @@ class CacheClass:
         "response_d": None,
         "configObj_D": None,
         "response_pn": None,
-        "response_check": None,
-        "index": 0
+        "index": 0,
+        "token": None,
+        "validate": None,
+        "duration": None,
     }
     filePath = 'Cache/CacheFile.json'
 
@@ -26,6 +28,23 @@ class CacheClass:
                 os.remove(file_path)
                 print('缓存已删除')
 
+    def clearCache(self):
+        dir_path = 'Cache/'
+        # 遍历目录中的所有文件
+        for filename in os.listdir(dir_path):
+            file_path = os.path.join(dir_path, filename)
+            # 删除文件
+            os.remove(file_path)
+            print('缓存已删除')
+
+    def clearValidate(self):
+        self.readCache()
+        self.cache['response_d'] = None
+        self.cache['configObj_D'] = None
+        self.cache['response_pn'] = None
+        self.cache['index'] = 0
+        self.updateCache(self.cache)
+
     def initCache(self):
         self.clearCacheBeforeToday()
         if os.path.exists(self.filePath):
@@ -42,3 +61,8 @@ class CacheClass:
     def updateCache(self,cacheObj):
         with open(self.filePath, 'w') as f:
             json.dump(cacheObj, f)
+
+    def refreshDuration(self,duration):
+        self.readCache()
+        self.cache['duration'] = duration
+        self.updateCache(self.cache)

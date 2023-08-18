@@ -1,5 +1,5 @@
 class URLClass:
-    myInfo = "https://lhqkl.ydmap.cn/v2/pubUser/my.do?_time=?_time="
+    myInfo = "https://lhqkl.ydmap.cn/v2/pubUser/my.do?_time="
     querySrvInfo = "https://lhqkl.ydmap.cn/v2/querySrvInfo.do?_time="
     validateConfig = "https://c.dun.163.com/api/v2/getconf?referer={0}&zoneId=&id={1}&ipv6=false&runEnv={2}&loadVersion={3}&callback={4}"
     validatePn = "https://ac.dun.163.com/v2/config/js?pn={0}&cvk=&cb={1}&t={2}"

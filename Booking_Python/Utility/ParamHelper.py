@@ -30,12 +30,19 @@ class ParamHelper:
             "_time": timestamp,
             "signature": signature
         }
-        print(param)
         return param
 
-    def getSingature(self):
+    def getLoginSingature(self,loginWithMobile,duration):
         ctx = self.getJSctx(QueryType.SrvInfo)
-        result = ctx.call("Get_signature")
+        encryptResult = ctx.call("Get_login_Encrypt",loginWithMobile)
+        print(encryptResult)
+        result = ctx.call("Get_login_signature", encryptResult,duration)
+        encryptResult['captchaStyleIndex'] = None
+        return self.handleParam(result),encryptResult
+
+    def getSingature(self,now,duration):
+        ctx = self.getJSctx(QueryType.SrvInfo)
+        result = ctx.call("Get_signature",now,duration)
         return self.handleParam(result)
 
     def getSingatureWithArg(self,url,duration):
@@ -89,7 +96,10 @@ class ParamHelper:
         jsFile = self.getJsFileName(type)
         with open(jsFile, "r",encoding='utf-8') as f:
             js_code = f.read()
-        ctx = execjs.compile(js_code)
+        move = dict.fromkeys((ord(c) for c in u"\xa0"))
+        output = js_code.translate(move)
+        output = 'const jsdom = require("jsdom");const { JSDOM } = jsdom;const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);const window = dom.window;' + output
+        ctx = execjs.compile(output)
         return ctx
 
     def getValidateParam_d(self,configObj):
@@ -186,6 +196,6 @@ class ParamHelper:
         img_front = fileHelper.downloadFileByURL(data['front'][0])
         gap = fileHelper.identify_gap(img_bg,img_front,'Image/out.png') * 2
         print('缺口距离为：' + str(gap))
-        slideArr = fileHelper.get_slide_track(gap)
+        slideArr = fileHelper.get_slide_track(gap + 40)
         print('轨迹数组：' + str(slideArr))
         return gap,slideArr

@@ -1,8 +1,8 @@
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
+// const jsdom = require("jsdom");
+// const { JSDOM } = jsdom;
 
-const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-const window = dom.window;
+// const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+// const window = dom.window;
 
 var ca={
     "bc": {

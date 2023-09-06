@@ -7,7 +7,8 @@ class QueryType(Enum):
     MyInfo = 3
     ValidateCode = 4
     CoreV2 = 5
-    Login = 5
+    Login = 6
+    SlideArray = 7
 
 class IndexType(Enum):
     CurlyBrackets = 1,

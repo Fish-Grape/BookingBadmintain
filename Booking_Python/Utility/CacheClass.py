@@ -37,13 +37,12 @@ class CacheClass:
             os.remove(file_path)
             print('缓存已删除')
 
-    def clearValidate(self):
-        self.readCache()
-        self.cache['response_d'] = None
-        self.cache['configObj_D'] = None
-        self.cache['response_pn'] = None
-        self.cache['index'] = 0
-        self.updateCache(self.cache)
+    def clearValidate(self,cache):
+        cache['response_d'] = None
+        cache['configObj_D'] = None
+        cache['response_pn'] = None
+        cache['index'] = 0
+        self.updateCache(cache)
 
     def initCache(self):
         self.clearCacheBeforeToday()

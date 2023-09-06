@@ -16,7 +16,6 @@ class QueryValidateCode(BaseService):
         retry_result = self.tryValidate()
         if retry_result == False:
             for i in range(1, 2):
-                time.sleep(1)
                 retry_result = self.tryValidate()
                 if retry_result:
                     return retry_result
@@ -34,9 +33,9 @@ class QueryValidateCode(BaseService):
                     print('Send refer success!')
                     time.sleep(1)
                     response_check = self.sendCheck(response_ref)
-                    if response_check['data'] != None and response_check['data']['result'] == True:
+                    if response_check['error'] == 0 and response_check['data']['result'] == True:
                         print('Send check success!')
-                        self.cacheClass.clearValidate()
+                        self.cacheClass.clearValidate(CacheClass.cache)
                         CacheClass.cache['validate'] = response_check['data']['validate']
                         self.cacheClass.updateCache(CacheClass.cache)
                         return True

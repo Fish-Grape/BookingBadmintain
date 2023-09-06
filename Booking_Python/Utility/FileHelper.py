@@ -2,8 +2,6 @@ import requests
 import os
 import cv2
 import random
-import numpy as np  # numpy 数学函数库
-import pandas as pd  # pandas 数据分析库
 import math
 import time
 
@@ -59,124 +57,95 @@ class FileHelper:
         return X
 
     def get_slide_track(self,distance):
+        slide_array = self.get_tracks(distance)
+        return slide_array
+
+    def get_tracks(self,distance):
         """
-        根据滑动距离生成滑动轨迹
-        :param distance: 需要滑动的距离
-        :return: 滑动轨迹<type 'list'>: [[x,y,t], ...]
-            x: 已滑动的横向距离
-            y: 已滑动的纵向距离, 除起点外, 均为0
-            t: 滑动过程消耗的时间, 单位: 毫秒
+        传入经过计算的实际缺口距离，用于生成轨迹
+        :param distance:
+        :return:
         """
- 
-        if not isinstance(distance, int) or distance < 0:
-            raise ValueError(f"distance类型必须是大于等于0的整数: distance: {distance}, type: {type(distance)}")
-
-        # 初始化滑动时间
-        t = random.randint(95, 98)
-        init_x = 650 + random.randint(-10,10)
-        init_y = 605 + random.randint(-15,15)
-        total_distance = distance + init_x + random.choice([-2, 1, 2])
-        # 初始化轨迹列表
-        slide_track = [
-            [init_x, init_y, t],
-        ]
-        # 共记录count次滑块位置信息
-        flag = True
-        # 记录上一次滑动的距离
-        _x = init_x
-        _y = init_y
-        probability = 0
-        slide = 0
-        slide_x = 0
-        while flag:
-            if _x == total_distance:
-                flag = False
-                break
-            # 已滑动的横向距离
-            slide_x = self.set_x(probability,distance,slide_x)
-            if _x > total_distance:
-                slide_x = -slide_x
-            x = _x + slide_x
-            slide += slide_x
-            probability = slide / distance
-            # 已滑动的纵向距离
-            y = self.set_y()
-            # 滑动过程消耗的时间
-            if x == _x:
-                continue
-            t += self.set_t(probability)
-            slide_track.append([x, _y + y, t])
-            _x = x
-        return slide_track #, slide_track[-1][2]   # 大数组，滑动时间
-
-    def set_y(self):
-        return random.choice([0, 0, 0, 0, 0, 0, 0, 0, 1, -1, 2])
-
-    def set_x(self,pro,distance,slide_x):
-        if distance < 210:
-            if pro <= 0.55:
-                if slide_x > 0:
-                    x = self.getStep(slide_x,3,10)
-                    return x
-                x = random.choice([8, 8, 9, 9, 10, 8, 8, 7, 7, 8, 6, 6])
-                return x
+        valve = round(random.uniform(0.55, 0.75), 2)  # 分割加减速路径的阀值
+        distance += 20  # 划过缺口20px
+        v, t, sum = 0, 0.2, 0  # 初始速度，初始计算周期，累积滑动总距的变量
+        plus = []  # 用于记录轨迹
+        mid = distance * valve  # 将滑动距离分段，一段加速度，一段减速度
+        while sum < distance:
+            if sum < mid:
+                a = round(random.uniform(2.5, 3.5), 1)  # 指定范围随机产生一个加速度
             else:
-                # if slide_x > 3:
-                #     x = slide_x + random.randint(-2, -1)
-                #     return x
-                return random.choice([3,3,3,2,1,1,1,1,2,3,2,3,2,3,2,2,1,2,2,1,1,2,1,1,1,1,1,1,1,1,2,1,2,1,2,1,1,1,2,0,1,1,2,1,2,1,1,1,1,2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+                a = -(round(random.uniform(2.0, 3.0), 1))  # 指定范围随机产生一个减速的加速度
+            s = v * t + 0.5 * a * (t ** 2)  # 一个周期需要滑动的距离
+            v = v + a * t  # 一个周期结束时的速度
+            sum += s
+            plus.append(round(s))
+
+        reduce = [-3, -3, -2, -2, -2, -2, -2, -1, -1, -1]  # 手动制造回滑的轨迹累积20px
+        print({'plus': plus, 'reduce': reduce})
+        return {'plus': plus, 'reduce': reduce}
+
+    def generate_trace(self,distance, start_time):
+        """
+        生成轨迹
+        :param distance:
+        :param start_time:
+        :return:
+        """
+        back = random.randint(2, 6)
+        distance += back
+        # 初速度
+        v = 10
+        # 位移/轨迹列表，列表内的一个元素代表0.02s的位移
+        tracks_list = []
+        # 当前的位移
+        current = 6
+        while current < distance - 13:
+            # 加速度越小，单位时间的位移越小,模拟的轨迹就越多越详细
+            a = random.randint(1000, 1200)  # 加速运动
+            # 初速度
+            v0 = v
+            t = random.randint(9, 18)
+            s = v0 * t / 1000 + 0.5 * a * ((t / 1000) ** 2)
+            # 当前的位置
+            current += s
+            # 速度已经达到v,该速度作为下次的初速度
+            v = v0 + a * t / 1000
+            # 添加到轨迹列表
+            if current < distance:
+                tracks_list.append(round(current))
+        # 减速慢慢滑
+        if round(current) < distance:
+            for i in range(round(current) + 1, distance + 1):
+                tracks_list.append(i)
         else:
-            if pro <= 0.58:
-                if slide_x > 0:
-                    x = self.getStep(slide_x,6,12)
-                    return x
-                x = random.choice([10,9,8,7])
-                return x
-            elif pro <= 0.86:
-                if slide_x > 4:
-                    x = slide_x + random.randint(-2, -1)
-                else:
-                    x = self.getStep(slide_x, 1, 4)
-                return x
-            else:
-                if slide_x > 3:
-                    x = slide_x + random.randint(-2, -1)
-                    return x
-                return random.choice([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,3,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0])
-
-    def getStep(self,slide_x,min,max):
-        step = slide_x + random.randint(-2, 2)
-        flag = True
-        while flag:
-            if step<=max and step >=min:
-                flag = False
-            else:
-                step = slide_x + random.randint(-2, 2)
-        return step
-
-
-    isFirst = True
-    def set_t(self,pro):
-        if pro <= 0.87:
-            return self.generate_t_pre()
-        else:
-            if self.isFirst:
-                self.isFirst = False
-                return random.randint(113,280)
-            temp_pro = round(pro,2)
-            # if temp_pro == 0.92 or temp_pro == 0.98:
-            #     self.isFirst = True
-            return random.choice([15,16,8,16,8,8,7,17,24,8,15,16,73,8,81,15,24,7,25,32,64,16,8,16,15,16,7,8,8,8,8,8,6,8,9,8,16,81,7,24,32,16,16,32,24,24,8,23])
-
-
-    def generate_t_pre(self):
-        num = 0
-        arr = [7, 9]
-        random_num = random.randint(0, 99)
-        if random_num < 77:
-            num = 8
-        else:
-            num = random.choice(arr)
-        return num
-
-
+            for i in range(tracks_list[-1] + 1, distance + 1):
+                tracks_list.append(i)
+        # 回退
+        for _ in range(back):
+            current -= 1
+            tracks_list.append(round(current))
+        tracks_list.append(round(current) - 1)
+        if tracks_list[-1] != distance - back:
+            tracks_list.append(distance - back)
+        # 生成时间戳列表
+        timestamp_list = []
+        timestamp = int(time.time() * 1000) + 100
+        for i in range(len(tracks_list)):
+            t = random.randint(11, 18)
+            timestamp += t
+            timestamp_list.append(timestamp)
+            i += 1
+        y_list = []
+        zy = 0
+        for j in range(len(tracks_list)):
+            y = random.choice(
+                [0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+                 0, -1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, -1, 0, 0])
+            zy += y
+            y_list.append(zy)
+            j += 1
+        trace = []
+        for index, x in enumerate(tracks_list):
+            trace.append([x, y_list[index], timestamp_list[index] - start_time])
+        return trace

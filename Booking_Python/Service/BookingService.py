@@ -2,6 +2,8 @@ from Model.Enum import QueryType
 from Service.QueryService.QuerySwitch import QuerySwitch
 from Utility.CacheClass import CacheClass
 from Utility.FileHelper import FileHelper
+from Utility.ParamHelper import ParamHelper
+
 
 class BookingService:
     switch = QuerySwitch()

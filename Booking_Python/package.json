@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@wangshushuo/bezierjs": "^0.0.4",
     "jsdom": "^22.1.0"
   }
 }

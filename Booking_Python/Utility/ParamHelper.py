@@ -1,3 +1,4 @@
+import random
 import re
 import time
 from Model.Enum import QueryType
@@ -17,6 +18,7 @@ class ParamHelper:
             QueryType.SalesItemList: "QuerySalesItem.js",
             QueryType.ValidateCode: "Validate.js",
             QueryType.CoreV2: "CoreV2.js",
+            QueryType.SlideArray: "SlideArrayLibrary.js",
         }
         filePath = 'JS/' + switcher.get(argument, "srvInfo.js")
         return filePath
@@ -90,7 +92,7 @@ class ParamHelper:
 
     def getTimeSpan(self):
         _timestamp = int(time.time() * 1000)
-        return  _timestamp;
+        return  _timestamp
 
     def getJSctx(self,type):
         jsFile = self.getJsFileName(type)
@@ -164,7 +166,7 @@ class ParamHelper:
             'id': URLClass.param_id,
             'token': '',
             'acToken': 'undefined',
-            'data': {"d":"","m":"","p":"OTW2AMth8pgLCw\\vqIiHTzPjz/vbmUZYha5T9p33","ext":"nSmcCSfMDZJLaTF0umBMvd4dnVlgxYK5"},
+            'data': {"d":"","m":"","p":"","ext":""},
             'width': '640',
             'type': '2',
             'version': '2.21.5',
@@ -195,7 +197,13 @@ class ParamHelper:
         img_bg = fileHelper.downloadFileByURL(data['bg'][0])
         img_front = fileHelper.downloadFileByURL(data['front'][0])
         gap = fileHelper.identify_gap(img_bg,img_front,'Image/out.png') * 2
+        gap = gap + random.randint(-1, 1)
         print('缺口距离为：' + str(gap))
-        slideArr = fileHelper.get_slide_track(gap + 40)
+        slideArr = self.get_slide_track(gap + 41)
         print('轨迹数组：' + str(slideArr))
         return gap,slideArr
+
+    def get_slide_track(self,distance):
+        ctx = self.getJSctx(QueryType.SlideArray)
+        slideArray = ctx.call("get_trace",distance)
+        return slideArray

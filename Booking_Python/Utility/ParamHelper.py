@@ -197,9 +197,8 @@ class ParamHelper:
         img_bg = fileHelper.downloadFileByURL(data['bg'][0])
         img_front = fileHelper.downloadFileByURL(data['front'][0])
         gap = fileHelper.identify_gap(img_bg,img_front,'Image/out.png') * 2
-        gap = gap + random.randint(-1, 1)
         print('缺口距离为：' + str(gap))
-        slideArr = self.get_slide_track(gap + 41)
+        slideArr = self.get_slide_track(gap)
         print('轨迹数组：' + str(slideArr))
         return gap,slideArr
 

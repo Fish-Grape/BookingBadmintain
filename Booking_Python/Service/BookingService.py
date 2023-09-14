@@ -16,13 +16,11 @@ class BookingService:
         self.login()
 
     def login(self):
-        self.switch.sendQuery(QueryType.ValidateCode)
-
-        # myinfoResult = self.switch.sendQuery(QueryType.MyInfo)
-        # if myinfoResult['code'] == 401:
-        #     valiDateResult = self.switch.sendQuery(QueryType.ValidateCode)
-        #     if valiDateResult:
-        #         self.switch.sendQuery(QueryType.Login)
+        myinfoResult = self.switch.sendQuery(QueryType.MyInfo)
+        if myinfoResult['code'] == 401:
+            valiDateResult = self.switch.sendQuery(QueryType.ValidateCode)
+            if valiDateResult:
+                self.switch.sendQuery(QueryType.Login)
 
     def Main(self):
         self.init()
